@@ -7,6 +7,9 @@ import javax.persistence.*;
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(name = "customer_Id")
     private String customerID;
     @Column( name = "customer_name")
     private String customerName;
@@ -20,6 +23,18 @@ public class Customer {
     }
 
     public Customer() {
+    }
+
+    public Customer(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getCustomerID() {

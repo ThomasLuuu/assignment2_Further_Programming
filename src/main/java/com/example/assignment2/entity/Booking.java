@@ -7,6 +7,9 @@ import javax.persistence.*;
 public class Booking {
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(name ="bookingID")
     private String bookingID;
     @Column( name = "starting_location")
     private String statLocation;
@@ -38,6 +41,19 @@ public class Booking {
         this.customer = customer;
         this.driver = driver;
         this.totalCharge = totalCharge;
+    }
+    public Booking() {
+    }
+    public Booking(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Booking(String invoiceID, String customer, String driver, String totalCharge) {
@@ -123,6 +139,5 @@ public class Booking {
         this.totalCharge = totalCharge;
     }
 
-    public Booking() {
-    }
+
 }
