@@ -24,6 +24,7 @@ public class CarController {
 
     @GetMapping( "/{id}")
     public Optional<Car> findCarById(@PathVariable("id") String id){
+        System.out.println(id);
         return carService.findCarById(id);
     }
 

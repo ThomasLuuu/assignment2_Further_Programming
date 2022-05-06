@@ -6,8 +6,10 @@ import javax.persistence.*;
 @Table(name = "Cars")
 public class Car {
     @Id
-    @Column(name = "id")
+//    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String id;
+    @Column(name ="carID")
     private String carID;
     @Column(name = "make")
     private String make;
@@ -19,12 +21,13 @@ public class Car {
     private String convertible;
     @Column(name = "rating")
     private Long rating;
-    @Column(name = "license plate")
+    @Column(name = "license_plate")
     private String licensePlate;
-    @Column(name = "rate per kilometers")
+    @Column(name = "rate_per_kilometers")
     private Long ratePerKm;
 
-    public Car(String carID, String make, String model, String color, String convertible, Long rating, String licensePlate, Long ratePerKm) {
+    public Car(String id, String carID, String make, String model, String color, String convertible, Long rating, String licensePlate, Long ratePerKm) {
+        this.id = id;
         this.carID = carID;
         this.make = make;
         this.model = model;
@@ -35,7 +38,19 @@ public class Car {
         this.ratePerKm = ratePerKm;
     }
 
+
     public Car() {
+    }
+    public Car(String id) {
+        this.id = id;
+    }
+
+    public String getID() {
+        return id;
+    }
+
+    public void setID(String id) {
+        this.id = id;
     }
 
     public String getCarID() {

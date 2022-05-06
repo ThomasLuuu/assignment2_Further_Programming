@@ -8,13 +8,13 @@ public class Booking {
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private String bookingID;
-    @Column( name = "starting location")
+    @Column( name = "starting_location")
     private String statLocation;
-    @Column( name = "ending location")
+    @Column( name = "ending_location")
     private String endLocation;
-    @Column (name = "pick-up date time")
+    @Column (name = "pick_up_date_time")
     private String pickUpDateTime;
-    @Column ( name = "drop-off date time")
+    @Column ( name = "drop_off_date_time")
     private String dropOffDateTime;
     @Column ( name = "distance")
     private Float distance;
@@ -24,7 +24,7 @@ public class Booking {
     private String customer;
     @Column ( name = "driver")
     private String driver;
-    @Column ( name = "total charge")
+    @Column ( name = "total_charge")
     private String totalCharge;
 
     public Booking(String bookingID, String statLocation, String endLocation, String pickUpDateTime, String dropOffDateTime, Float distance, String invoiceID, String customer, String driver, String totalCharge) {
