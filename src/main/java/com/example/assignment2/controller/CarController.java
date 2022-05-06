@@ -23,8 +23,8 @@ public class CarController {
     }
 
     @GetMapping( "/{id}")
-    public Optional<Car> findCarById(@PathVariable("id") String id){
-        System.out.println(id);
+    public Optional<Car> findCarById(@PathVariable("id") Integer id){
+        System.out.println("this is: " + id);
         return carService.findCarById(id);
     }
 

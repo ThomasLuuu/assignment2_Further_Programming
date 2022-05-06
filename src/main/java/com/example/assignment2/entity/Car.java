@@ -6,9 +6,9 @@ import javax.persistence.*;
 @Table(name = "Cars")
 public class Car {
     @Id
-//    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Integer id;
+
     @Column(name ="carID")
     private String carID;
     @Column(name = "make")
@@ -26,7 +26,7 @@ public class Car {
     @Column(name = "rate_per_kilometers")
     private Long ratePerKm;
 
-    public Car(String id, String carID, String make, String model, String color, String convertible, Long rating, String licensePlate, Long ratePerKm) {
+    public Car(Integer id, String carID, String make, String model, String color, String convertible, Long rating, String licensePlate, Long ratePerKm) {
         this.id = id;
         this.carID = carID;
         this.make = make;
@@ -41,15 +41,15 @@ public class Car {
 
     public Car() {
     }
-    public Car(String id) {
+    public Car(Integer id) {
         this.id = id;
     }
 
-    public String getID() {
+    public Integer getID() {
         return id;
     }
 
-    public void setID(String id) {
+    public void setID(Integer id) {
         this.id = id;
     }
 

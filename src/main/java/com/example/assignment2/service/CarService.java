@@ -19,7 +19,7 @@ public class CarService {
     public List<Car> findAllCar(){
         return carRepository.findAll();
     }
-    public Optional<Car> findCarById(String id){
+    public Optional<Car> findCarById(Integer id){
         return carRepository.findById(id);
     }
     //Create
