@@ -1,4 +1,4 @@
-package com.example.assignment2.Entity;
+package com.example.assignment2.entity;
 
 import javax.persistence.*;
 
