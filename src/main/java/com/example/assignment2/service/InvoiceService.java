@@ -1,5 +1,5 @@
 package com.example.assignment2.service;
-import com.example.assignment2.entity.Driver;
+
 import com.example.assignment2.entity.Invoice;
 import com.example.assignment2.repository.InvoiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,8 @@ public class InvoiceService {
         this.invoiceRepository = invoiceRepository;
     }
     //Read
-    public List<Invoice> findAllInvoice(){return invoiceRepository.findAll();}
+    public List<Invoice> findAllInvoice(){
+        return invoiceRepository.findAll();}
     public Optional<Invoice> findInvoiceById(Integer id){
         return invoiceRepository.findById(id);
     }
