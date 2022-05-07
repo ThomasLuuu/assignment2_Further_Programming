@@ -31,7 +31,7 @@ public class CarService {
         return carRepository.save(car);
     }
     //Delete
-    public void deleteCar(String id){
+    public void deleteCar(Integer id){
         carRepository.deleteById(id);
     }
 

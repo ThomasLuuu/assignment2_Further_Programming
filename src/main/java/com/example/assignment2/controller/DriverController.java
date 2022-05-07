@@ -28,6 +28,12 @@ public class DriverController {
     public Driver saveDriver(@RequestBody Driver driver){return driverService.saveDriver(driver);}
     @PutMapping
     public Driver updateDriver(@RequestBody Driver driver){return driverService.updateDriver(driver);}
-    @DeleteMapping("/{id}")
-    public void deleteDriver(@PathVariable("id") Integer id) {driverService.deleteDriver(id);}
+
+    @RequestMapping(value ="/{id}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public String deleteDriver(@PathVariable("id") Integer id){
+        driverService.deleteDriver(id);
+        return "delete successfully";
+    }
+
 }

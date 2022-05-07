@@ -26,7 +26,10 @@ public class BookingService {
     //Update
     public  Booking updateBooking(Booking booking){return bookingRepository.save(booking);}
     //Delete
-    public void  deleteBooking(Integer id){bookingRepository.deleteById(id.toString());}
+    public void  deleteBooking(Integer id){
+        bookingRepository.deleteById(id);
+    };
+
 
 
 }

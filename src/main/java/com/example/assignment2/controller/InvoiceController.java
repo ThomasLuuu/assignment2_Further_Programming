@@ -27,6 +27,13 @@ public class InvoiceController {
     public Invoice saveInvoice(@RequestBody Invoice invoice){return invoiceService.saveInvoice(invoice);}
     @PutMapping
     public Invoice updateInvoice(@RequestBody Invoice invoice){return invoiceService.updateInvoice(invoice);}
-    @DeleteMapping("/{id}")
-    public void deleteInvoice(@PathVariable("id") Integer id) {invoiceService.deleteInvoice(id);}
+
+    @RequestMapping(value ="/{id}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public String deleteInvoice(@PathVariable("id") Integer id){
+        invoiceService.deleteInvoice(id);
+        return "delete successfully";
+
+    }
+
 }

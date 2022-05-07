@@ -24,6 +24,6 @@ public class DriverService {
     //Update
     public Driver updateDriver(Driver driver){return  driverRepository.save(driver);}
     //Delete
-    public void deleteDriver(Integer id){driverRepository.deleteById(id.toString());}
+    public void deleteDriver(Integer id){driverRepository.deleteById(id);}
 
 }

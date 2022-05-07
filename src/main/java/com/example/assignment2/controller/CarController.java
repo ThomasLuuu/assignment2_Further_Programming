@@ -38,10 +38,10 @@ public class CarController {
         return carService.updateCar(car);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteCar(@PathVariable("id") String id){
+    @RequestMapping( value = "/{id}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public String deleteCarById(@PathVariable("id") Integer id){
         carService.deleteCar(id);
+        return "delete succesfully";
     }
-
-
 }

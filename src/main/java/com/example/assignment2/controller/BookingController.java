@@ -2,6 +2,7 @@ package com.example.assignment2.controller;
 
 import com.example.assignment2.service.BookingService;
 import com.example.assignment2.entity.Booking;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.Optional;
 @RequestMapping("/booking")
 
 public class BookingController {
+    @Autowired
     private final BookingService bookingService;
 
 
@@ -34,7 +36,12 @@ public class BookingController {
     @PutMapping
     public  Booking updateBooking(@RequestBody Booking booking){return bookingService.updateBooking(booking);}
 
-    @DeleteMapping("/{id}")
-    public void deleteBooking(@PathVariable("id") Integer id){bookingService.deleteBooking(id);}
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public String deleteBooKingById(@PathVariable("id") Integer id){
+        bookingService.deleteBooking(id);
+        return "delete succesfully";
+    }
 
 }

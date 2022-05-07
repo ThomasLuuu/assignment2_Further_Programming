@@ -25,6 +25,6 @@ public class CustomerService {
     //Update
     public Customer updateCustomer(Customer customer){return customerRepository.save(customer);}
     //Delete
-    public void deleteCustomer(Integer id){customerRepository.deleteById(id.toString());}
+    public void deleteCustomer(Integer id){customerRepository.deleteById(id);}
 }
 
