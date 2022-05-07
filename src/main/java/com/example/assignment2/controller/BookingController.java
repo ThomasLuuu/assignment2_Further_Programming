@@ -25,7 +25,7 @@ public class BookingController {
     public List<Booking> findAllBooking(){return bookingService.findAllBooking();}
 
     @GetMapping("/{id}")
-    public  Optional<Booking> findBookingById(@PathVariable("id") Integer id){
+    public  Optional<Booking> findBookingById(@PathVariable("id") Long id){
         System.out.println("this is: " + id);
         return bookingService.findBookingById(id);
     }
@@ -39,7 +39,7 @@ public class BookingController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseBody
-    public String deleteBooKingById(@PathVariable("id") Integer id){
+    public String deleteBooKingById(@PathVariable("id") Long id){
         bookingService.deleteBooking(id);
         return "delete succesfully";
     }

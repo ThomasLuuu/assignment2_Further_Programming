@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class Driver {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     @Column(name ="driverID")
     private String driverID;
     @Column(name = "license_number")
@@ -26,15 +26,15 @@ public class Driver {
 
     public Driver() {
     }
-    public Driver(Integer id) {
+    public Driver(Long id) {
         this.id = id;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

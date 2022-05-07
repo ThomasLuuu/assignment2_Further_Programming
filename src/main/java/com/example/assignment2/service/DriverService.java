@@ -16,7 +16,7 @@ public class DriverService {
 
     //Read
     public List<Driver> findAllDriver(){return driverRepository.findAll();}
-    public Optional<Driver> findDriverbyId(Integer id){
+    public Optional<Driver> findDriverbyId(Long id){
         return driverRepository.findById(id);
     }
     //Create
@@ -24,6 +24,6 @@ public class DriverService {
     //Update
     public Driver updateDriver(Driver driver){return  driverRepository.save(driver);}
     //Delete
-    public void deleteDriver(Integer id){driverRepository.deleteById(id);}
+    public void deleteDriver(Long id){driverRepository.deleteById(id);}
 
 }

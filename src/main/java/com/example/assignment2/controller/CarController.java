@@ -23,7 +23,7 @@ public class CarController {
     }
 
     @GetMapping( "/{id}")
-    public Optional<Car> findCarById(@PathVariable("id") Integer id){
+    public Optional<Car> findCarById(@PathVariable("id") Long id){
         System.out.println("this is: " + id);
         return carService.findCarById(id);
     }
@@ -40,7 +40,7 @@ public class CarController {
 
     @RequestMapping( value = "/{id}", method = RequestMethod.DELETE)
     @ResponseBody
-    public String deleteCarById(@PathVariable("id") Integer id){
+    public String deleteCarById(@PathVariable("id") Long id){
         carService.deleteCar(id);
         return "delete succesfully";
     }

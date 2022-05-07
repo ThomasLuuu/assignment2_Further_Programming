@@ -18,7 +18,7 @@ public class BookingService {
     }
     //Read
     public List<Booking> findAllBooking(){return bookingRepository.findAll();}
-    public Optional<Booking> findBookingById(Integer id){
+    public Optional<Booking> findBookingById(Long id){
         return bookingRepository.findById(id);
     }
     //Create
@@ -26,7 +26,7 @@ public class BookingService {
     //Update
     public  Booking updateBooking(Booking booking){return bookingRepository.save(booking);}
     //Delete
-    public void  deleteBooking(Integer id){
+    public void  deleteBooking(Long id){
         bookingRepository.deleteById(id);
     };
 

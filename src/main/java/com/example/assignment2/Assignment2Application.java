@@ -8,7 +8,7 @@ public class Assignment2Application {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Assignment2Application.class, args);
-		System.out.println("Hello World");
+		System.out.println("The system is running!!");
 	}
 
 }

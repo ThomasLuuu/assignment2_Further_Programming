@@ -19,7 +19,7 @@ public class CarService {
     public List<Car> findAllCar(){
         return carRepository.findAll();
     }
-    public Optional<Car> findCarById(Integer id){
+    public Optional<Car> findCarById(Long id){
         return carRepository.findById(id);
     }
     //Create
@@ -31,7 +31,7 @@ public class CarService {
         return carRepository.save(car);
     }
     //Delete
-    public void deleteCar(Integer id){
+    public void deleteCar(Long id){
         carRepository.deleteById(id);
     }
 

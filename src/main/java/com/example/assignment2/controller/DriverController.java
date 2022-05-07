@@ -19,7 +19,7 @@ public class DriverController {
     @GetMapping
     public List<Driver> findAllDriver(){return driverService.findAllDriver();}
     @GetMapping("/{id}")
-    public Optional<Driver> findDriverById(@PathVariable("id") Integer id){
+    public Optional<Driver> findDriverById(@PathVariable("id") Long id){
         System.out.println("This is: " + id);
         return driverService.findDriverbyId(id);
 
@@ -31,7 +31,7 @@ public class DriverController {
 
     @RequestMapping(value ="/{id}", method = RequestMethod.DELETE)
     @ResponseBody
-    public String deleteDriver(@PathVariable("id") Integer id){
+    public String deleteDriver(@PathVariable("id") Long id){
         driverService.deleteDriver(id);
         return "delete successfully";
     }

@@ -17,7 +17,7 @@ public class CustomerService {
     }
     //Read
     public List<Customer> findAllCustomer(){return customerRepository.findAll();}
-    public Optional<Customer> findCustomerById(Integer id){
+    public Optional<Customer> findCustomerById(Long id){
         return customerRepository.findById(id);
     }
     //Create
@@ -25,6 +25,6 @@ public class CustomerService {
     //Update
     public Customer updateCustomer(Customer customer){return customerRepository.save(customer);}
     //Delete
-    public void deleteCustomer(Integer id){customerRepository.deleteById(id);}
+    public void deleteCustomer(Long id){customerRepository.deleteById(id);}
 }
 

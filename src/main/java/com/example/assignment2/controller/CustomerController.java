@@ -20,7 +20,7 @@ public class CustomerController {
     public List<Customer> findAllCustomer(){return customerService.findAllCustomer();}
 
     @GetMapping("/{id}")
-    public  Optional<Customer> findCustomerById(@PathVariable("id") Integer id){
+    public  Optional<Customer> findCustomerById(@PathVariable("id") Long id){
         System.out.println("This is: " + id);
         return customerService.findCustomerById(id);
     }
@@ -32,7 +32,7 @@ public class CustomerController {
 
     @RequestMapping(value ="/{id}", method = RequestMethod.DELETE)
     @DeleteMapping
-    public String deleteCustomer(@PathVariable("id") Integer id){
+    public String deleteCustomer(@PathVariable("id") Long id){
         customerService.deleteCustomer(id);
         return "delete successfully";
     }

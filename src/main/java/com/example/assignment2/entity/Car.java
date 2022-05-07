@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column(name ="carID")
     private String carID;
@@ -26,7 +26,7 @@ public class Car {
     @Column(name = "rate_per_kilometers")
     private Long ratePerKm;
 
-    public Car(Integer id, String carID, String make, String model, String color, String convertible, Long rating, String licensePlate, Long ratePerKm) {
+    public Car(Long id, String carID, String make, String model, String color, String convertible, Long rating, String licensePlate, Long ratePerKm) {
         this.id = id;
         this.carID = carID;
         this.make = make;
@@ -41,15 +41,15 @@ public class Car {
 
     public Car() {
     }
-    public Car(Integer id) {
+    public Car(Long id) {
         this.id = id;
     }
 
-    public Integer getID() {
+    public Long getID() {
         return id;
     }
 
-    public void setID(Integer id) {
+    public void setID(Long id) {
         this.id = id;
     }
 

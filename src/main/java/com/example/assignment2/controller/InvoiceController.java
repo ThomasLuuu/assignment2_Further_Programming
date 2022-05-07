@@ -18,7 +18,7 @@ public class InvoiceController {
     @GetMapping
     public List<Invoice> findAllInvoice(){return invoiceService.findAllInvoice();}
     @GetMapping("/{id}")
-    public Optional<Invoice> findInvoiceById(@PathVariable("id") Integer id){
+    public Optional<Invoice> findInvoiceById(@PathVariable("id") Long id){
         System.out.println("This is: " + id);
         return invoiceService.findInvoiceById(id);
 
@@ -30,7 +30,7 @@ public class InvoiceController {
 
     @RequestMapping(value ="/{id}", method = RequestMethod.DELETE)
     @ResponseBody
-    public String deleteInvoice(@PathVariable("id") Integer id){
+    public String deleteInvoice(@PathVariable("id") Long id){
         invoiceService.deleteInvoice(id);
         return "delete successfully";
 

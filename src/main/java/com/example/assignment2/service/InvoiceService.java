@@ -17,7 +17,7 @@ public class InvoiceService {
     //Read
     public List<Invoice> findAllInvoice(){
         return invoiceRepository.findAll();}
-    public Optional<Invoice> findInvoiceById(Integer id){
+    public Optional<Invoice> findInvoiceById(Long id){
         return invoiceRepository.findById(id);
     }
     //Create
@@ -25,6 +25,6 @@ public class InvoiceService {
     //Update
     public Invoice updateInvoice(Invoice invoice){return  invoiceRepository.save(invoice);}
     //Delete
-    public void deleteInvoice(Integer id){invoiceRepository.deleteById(id);}
+    public void deleteInvoice(Long id){invoiceRepository.deleteById(id);}
 
 }
