@@ -20,14 +20,13 @@ public class Car {
     @Column(name = "convertible")
     private String convertible;
     @Column(name = "rating")
-    private Long rating;
+    private String rating;
     @Column(name = "license_plate")
     private String licensePlate;
-    @Column(name = "rate_per_kilometers")
-    private Long ratePerKm;
+    @Column(name = "rate_per_kilometers") // price per km (dollars)
+    private double ratePerKm;
 
-    public Car(Long id, String carID, String make, String model, String color, String convertible, Long rating, String licensePlate, Long ratePerKm) {
-        this.id = id;
+    public Car(String carID, String make, String model, String color, String convertible, String rating, String licensePlate, double ratePerKm) {
         this.carID = carID;
         this.make = make;
         this.model = model;
@@ -93,11 +92,11 @@ public class Car {
         this.convertible = convertible;
     }
 
-    public Long getRating() {
+    public String getRating() {
         return rating;
     }
 
-    public void setRating(Long rating) {
+    public void setRating(String rating) {
         this.rating = rating;
     }
 
@@ -109,11 +108,11 @@ public class Car {
         this.licensePlate = licensePlate;
     }
 
-    public Long getRatePerKm() {
+    public double getRatePerKm() {
         return ratePerKm;
     }
 
-    public void setRatePerKm(Long ratePerKm) {
+    public void setRatePerKm(double ratePerKm) {
         this.ratePerKm = ratePerKm;
     }
 }

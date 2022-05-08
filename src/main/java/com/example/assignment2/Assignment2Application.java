@@ -52,10 +52,10 @@ public class Assignment2Application {
 		SessionFactory driverFactory = getSessionFactory(dummyDriver);
 
 		try (customerFactory; Session session = customerFactory.getCurrentSession()) {
-			Customer customer = new Customer("s3753740", "Khang", 10009000);
-			Customer customer1 = new Customer("1000", "Duy", 10008000);
-			Customer customer2 = new Customer("2000", "Marcus", 19098910);
-			Customer customer3 = new Customer("3000", "Josh", 123456789);
+			Customer customer = new Customer("c001", "Khang", "0911111");
+			Customer customer1 = new Customer("c002", "Duy", "0911112");
+			Customer customer2 = new Customer("c003", "Marcus", "0911113");
+			Customer customer3 = new Customer("c004", "Josh", "0911114");
 
 			session.beginTransaction();
 			session.save(customer);
@@ -67,14 +67,14 @@ public class Assignment2Application {
 		}
 
 		try (carFactory; Session session = carFactory.getCurrentSession()) {
-			Car car1 = new Car(100000L, "001", "dummy",
-					"SUV", "black", "yes", 300000L, "61A-10319", 56000L);
-			Car car2 = new Car(200000L, "001", "dummy",
-					"SUV", "red", "no", 400000L, "61A-10319", 60000L);
-			Car car3 = new Car(300000L, "001", "dummy",
-					"SUV", "blue", "yes", 500000L, "61A-10319", 76000L);
-			Car car4 = new Car(400000L, "001", "dummy",
-					"SUV", "orange", "no", 600000L, "61A-10319", 90000L);
+			Car car1 = new Car( "50E-23122 ", "Germany",
+					"SUV", "Black", "yes", "B", "61A-10319", 10.0);
+			Car car2 = new Car("51E-83726", "Germany",
+					"SUV", "White", "no", "C", "61A-10319",10.6);
+			Car car3 = new Car("50E-72637", "Italy",
+					"SUV", "Blue", "yes", "B", "61A-10319", 9.8);
+			Car car4 = new Car("51E-82591", "China",
+					"SUV", "Red", "no", "A", "61A-10319", 6.5);
 
 			session.beginTransaction();
 			session.save(car1);
@@ -86,10 +86,10 @@ public class Assignment2Application {
 		}
 
 		try (driverFactory; Session session = driverFactory.getCurrentSession()) {
-			Driver driver1 = new Driver("1", "12345", 90867474, "3.5");
-			Driver driver2 = new Driver("2", "33456", 90006700, "5.0");
-			Driver driver3 = new Driver("3", "45698", 10003065, "2.7");
-			Driver driver4 = new Driver("4", "78659", 20078695, "4.1");
+			Driver driver1 = new Driver("d001", "12345", "90867474", 3.1);
+			Driver driver2 = new Driver("d002", "33456", "90006700", 4.0);
+			Driver driver3 = new Driver("d003", "45698", "90003065", 3.9);
+			Driver driver4 = new Driver("d004", "78659", "90078695", 2.1);
 
 			session.beginTransaction();
 			session.save(driver1);

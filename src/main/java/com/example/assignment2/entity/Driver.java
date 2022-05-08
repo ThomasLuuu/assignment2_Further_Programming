@@ -13,11 +13,11 @@ public class Driver {
     @Column(name = "license_number")
     private String licenseNumber;
     @Column(name = "phone_number")
-    private int phoneNumber;
+    private String phoneNumber;
     @Column(name = "rate")
-    private String rate;
+    private double rate;
 
-    public Driver(String driverID, String licenseNumber, int phoneNumber, String rate) {
+    public Driver(String driverID, String licenseNumber, String phoneNumber, double rate) {
         this.driverID = driverID;
         this.licenseNumber = licenseNumber;
         this.phoneNumber = phoneNumber;
@@ -54,19 +54,19 @@ public class Driver {
         this.licenseNumber = licenseNumber;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getRate() {
+    public double getRate() {
         return rate;
     }
 
-    public void setRate(String rate) {
+    public void setRate(double rate) {
         this.rate = rate;
     }
 }

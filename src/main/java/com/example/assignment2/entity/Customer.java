@@ -14,9 +14,9 @@ public class Customer {
     @Column( name = "customer_name")
     private String customerName;
     @Column( name = "phone_number")
-    private int phoneNumber;
+    private String phoneNumber;
 
-    public Customer(String customerID, String customerName, int phoneNumber) {
+    public Customer(String customerID, String customerName, String phoneNumber) {
         this.customerID = customerID;
         this.customerName = customerName;
         this.phoneNumber = phoneNumber;
@@ -53,11 +53,11 @@ public class Customer {
         this.customerName = customerName;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 }
