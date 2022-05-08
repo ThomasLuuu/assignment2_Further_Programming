@@ -13,27 +13,24 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Assignment2Application {
 
 	public static synchronized SessionFactory getSessionFactory(Customer customer) {
-		SessionFactory factory = new Configuration()
+		return new Configuration()
 				.configure()
 				.addAnnotatedClass(customer.getClass())
 				.buildSessionFactory();
-		return factory;
 	}
 
 	public static synchronized SessionFactory getSessionFactory(Car car) {
-		SessionFactory factory = new Configuration()
+		return new Configuration()
 				.configure()
 				.addAnnotatedClass(car.getClass())
 				.buildSessionFactory();
-		return factory;
 	}
 
 	public static synchronized SessionFactory getSessionFactory(Driver driver) {
-		SessionFactory factory = new Configuration()
+		return new Configuration()
 				.configure()
 				.addAnnotatedClass(driver.getClass())
 				.buildSessionFactory();
-		return factory;
 	}
 
 	public static void main(String[] args) {
