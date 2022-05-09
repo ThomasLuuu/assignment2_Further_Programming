@@ -5,6 +5,8 @@ import com.example.assignment2.entity.Booking;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +24,11 @@ public class BookingController {
     }
 
     @GetMapping
-    public List<Booking> findAllBooking(){return bookingService.findAllBooking();}
+    public List<Booking> findAllBooking(){
+        List<Booking> listBooking = bookingService.findAllBooking();
+        Collections.sort(listBooking, Comparator.comparingLong(Booking::getId));
+        return listBooking;
+    }
 
     @GetMapping("/{id}")
     public  Optional<Booking> findBookingById(@PathVariable("id") Long id){

@@ -4,6 +4,8 @@ import com.example.assignment2.service.InvoiceService;
 import com.example.assignment2.entity.Invoice;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,7 +18,11 @@ public class InvoiceController {
         this.invoiceService = invoiceService;
     }
     @GetMapping
-    public List<Invoice> findAllInvoice(){return invoiceService.findAllInvoice();}
+    public List<Invoice> findAllInvoice(){
+        List <Invoice> invoiceList = invoiceService.findAllInvoice();
+        Collections.sort(invoiceList, Comparator.comparingLong(Invoice::getId));
+        return invoiceList;
+    }
     @GetMapping("/{id}")
     public Optional<Invoice> findInvoiceById(@PathVariable("id") Long id){
         System.out.println("This is: " + id);

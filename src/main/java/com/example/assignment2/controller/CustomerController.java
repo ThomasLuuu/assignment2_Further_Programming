@@ -1,9 +1,12 @@
 package com.example.assignment2.controller;
 
+import com.example.assignment2.entity.Booking;
 import com.example.assignment2.service.CustomerService;
 import com.example.assignment2.entity.Customer;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,7 +20,11 @@ public class CustomerController {
         this.customerService = customerService;
     }
     @GetMapping
-    public List<Customer> findAllCustomer(){return customerService.findAllCustomer();}
+    public List<Customer> findAllCustomer(){
+        List<Customer> listCustomer = customerService.findAllCustomer();
+        Collections.sort(listCustomer, Comparator.comparingLong(Customer::getId));
+        return listCustomer;
+    }
 
     @GetMapping("/{id}")
     public  Optional<Customer> findCustomerById(@PathVariable("id") Long id){

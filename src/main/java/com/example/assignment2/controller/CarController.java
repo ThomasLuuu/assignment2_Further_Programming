@@ -4,22 +4,27 @@ package com.example.assignment2.controller;
 
 import com.example.assignment2.service.CarService;
 import com.example.assignment2.entity.Car;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/car")
 public class CarController {
     private final CarService carService;
 
+
     public CarController(CarService carService) {
         this.carService = carService;
     }
     @GetMapping
     public List<Car> findAllCar(){
-        return carService.findAllCar();
+        List <Car> carList =  carService.findAllCar();
+        Collections.sort(carList, Comparator.comparingLong(Car::getID));
+        return carList;
     }
 
     @GetMapping( "/{id}")

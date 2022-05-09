@@ -3,6 +3,8 @@ import com.example.assignment2.service.DriverService;
 import com.example.assignment2.entity.Driver;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,7 +19,11 @@ public class DriverController {
     }
 
     @GetMapping
-    public List<Driver> findAllDriver(){return driverService.findAllDriver();}
+    public List<Driver> findAllDriver(){
+        List<Driver> listDriver = driverService.findAllDriver();
+        Collections.sort(listDriver, Comparator.comparingLong(Driver::getId));
+        return listDriver;
+    }
     @GetMapping("/{id}")
     public Optional<Driver> findDriverById(@PathVariable("id") Long id){
         System.out.println("This is: " + id);
