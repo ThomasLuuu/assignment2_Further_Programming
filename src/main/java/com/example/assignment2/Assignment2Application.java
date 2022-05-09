@@ -53,9 +53,9 @@ public class Assignment2Application {
 
 		try (customerFactory; Session session = customerFactory.getCurrentSession()) {
 			Customer customer = new Customer("c001", "Khang", "0911111");
-			Customer customer1 = new Customer("c002", "Duy", "0911112");
-			Customer customer2 = new Customer("c003", "Marcus", "0911113");
-			Customer customer3 = new Customer("c004", "Josh", "0911114");
+			Customer customer1 = new Customer("c002", "Tin", "0911112");
+			Customer customer2 = new Customer("c003", "Toan", "0911113");
+			Customer customer3 = new Customer("c004", "Duc", "0911114");
 
 			session.beginTransaction();
 			session.save(customer);
