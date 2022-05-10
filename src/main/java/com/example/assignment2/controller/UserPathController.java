@@ -13,7 +13,7 @@ public class UserPathController {
         this.bookingService = bookingService;
     }
 
-    @RequestMapping( value = "/{id}", method = RequestMethod.POST)
+    @RequestMapping( value = "/{id}/booking", method = RequestMethod.POST)
     @ResponseBody
 
     public Booking saveBooking(@RequestBody Booking booking, @PathVariable("id") String id){
