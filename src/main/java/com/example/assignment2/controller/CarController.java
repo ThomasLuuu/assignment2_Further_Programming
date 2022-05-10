@@ -4,11 +4,10 @@ package com.example.assignment2.controller;
 
 import com.example.assignment2.service.CarService;
 import com.example.assignment2.entity.Car;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.*;
 
 @RestController
@@ -49,4 +48,19 @@ public class CarController {
         carService.deleteCar(id);
         return "delete succesfully";
     }
+
+    @GetMapping("/available")
+    public List<Car> findCarByStatusTrue( HttpServletResponse res) throws IOException {
+        System.out.println("You have done this ");
+//        res.sendRedirect("localhost:8080/car");
+        return carService.findCarByStatusTrue();
+    }
+    @GetMapping("/index")
+    public String index( HttpServletResponse res) throws IOException {
+        // model has the attribute 'message'
+        System.out.println("try it");
+        res.sendRedirect("localhost:8080/");
+        return "null";
+    }
+
 }

@@ -1,13 +1,18 @@
 package com.example.assignment2;
-
+import org.springframework.boot.CommandLineRunner;
 import com.example.assignment2.entity.Customer;
 import com.example.assignment2.entity.Car;
 import com.example.assignment2.entity.Driver;
+import com.example.assignment2.repository.CarRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+
+import javax.transaction.Transactional;
+import java.util.List;
 
 @SpringBootApplication
 public class Assignment2Application {
@@ -42,10 +47,7 @@ public class Assignment2Application {
 		Car dummyCar = new Car();
 		Driver dummyDriver = new Driver();
 
-//		SessionFactory factory = new Configuration()
-//				.configure()
-//				.addAnnotatedClass(Customer.class)
-//				.buildSessionFactory();
+
 
 		SessionFactory customerFactory = getSessionFactory(dummyCustomer);
 		SessionFactory carFactory = getSessionFactory(dummyCar);
@@ -68,13 +70,13 @@ public class Assignment2Application {
 
 		try (carFactory; Session session = carFactory.getCurrentSession()) {
 			Car car1 = new Car( "50E-23122 ", "Germany",
-					"SUV", "Black", "yes", "B", "61A-10319", 10.0);
+					"SUV", "Black", "yes", "B", "61A-10319", 10.0, true);
 			Car car2 = new Car("51E-83726", "Germany",
-					"SUV", "White", "no", "C", "61A-10319",10.6);
+					"SUV", "White", "no", "C", "61A-10319",10.6, false);
 			Car car3 = new Car("50E-72637", "Italy",
-					"SUV", "Blue", "yes", "B", "61A-10319", 9.8);
+					"SUV", "Blue", "yes", "B", "61A-10319", 9.8, false);
 			Car car4 = new Car("51E-82591", "China",
-					"SUV", "Red", "no", "A", "61A-10319", 6.5);
+					"SUV", "Red", "no", "A", "61A-10319", 6.5, false);
 
 			session.beginTransaction();
 			session.save(car1);
@@ -99,5 +101,20 @@ public class Assignment2Application {
 			session.getTransaction().commit();
 			System.out.println("Drivers added successfully");
 		}
+
 	}
+
+//	@Bean
+//	@Transactional
+//	public CommandLineRunner demo(CarRepository carRepository){
+//		return (args) ->{
+//			List<GetMake> c = carRepository.findMake();
+//			printOnlyMake(c);
+//
+//		};
+//
+//	}
+
+
+
 }

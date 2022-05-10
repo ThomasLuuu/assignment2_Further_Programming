@@ -1,5 +1,7 @@
 package com.example.assignment2.entity;
 
+import lombok.Getter;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,7 +14,7 @@ public class Car {
     @Column(name ="carID")
     private String carID;
     @Column(name = "make")
-    private String make;
+    public String make;
     @Column(name = "model")
     private String model;
     @Column(name = "color")
@@ -25,8 +27,10 @@ public class Car {
     private String licensePlate;
     @Column(name = "rate_per_kilometers") // price per km (dollars)
     private double ratePerKm;
+    @Column(name = "status")
+    private boolean status;
 
-    public Car(String carID, String make, String model, String color, String convertible, String rating, String licensePlate, double ratePerKm) {
+    public Car(String carID, String make, String model, String color, String convertible, String rating, String licensePlate, double ratePerKm, boolean status) {
         this.carID = carID;
         this.make = make;
         this.model = model;
@@ -35,6 +39,7 @@ public class Car {
         this.rating = rating;
         this.licensePlate = licensePlate;
         this.ratePerKm = ratePerKm;
+        this.status = status;
     }
 
 
@@ -114,5 +119,28 @@ public class Car {
 
     public void setRatePerKm(double ratePerKm) {
         this.ratePerKm = ratePerKm;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "id=" + id +
+                ", carID='" + carID + '\'' +
+                ", make='" + make + '\'' +
+                ", model='" + model + '\'' +
+                ", color='" + color + '\'' +
+                ", convertible='" + convertible + '\'' +
+                ", rating='" + rating + '\'' +
+                ", licensePlate='" + licensePlate + '\'' +
+                ", ratePerKm=" + ratePerKm +
+                '}';
     }
 }
