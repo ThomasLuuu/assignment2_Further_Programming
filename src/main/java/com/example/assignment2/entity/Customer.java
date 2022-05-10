@@ -9,11 +9,11 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "customer_Id")
+    @Column(name = "customerID")
     private String customerID;
-    @Column( name = "customer_name")
+    @Column( name = "customer_Name")
     private String customerName;
-    @Column( name = "phone_number")
+    @Column( name = "phone_Number")
     private String phoneNumber;
 
     public Customer(String customerID, String customerName, String phoneNumber) {

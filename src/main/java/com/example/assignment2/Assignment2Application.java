@@ -70,13 +70,13 @@ public class Assignment2Application {
 
 		try (carFactory; Session session = carFactory.getCurrentSession()) {
 			Car car1 = new Car( "50E-23122 ", "Germany",
-					"SUV", "Black", "yes", "B", "61A-10319", 10.0, true);
+					"SUV", "Black", "yes", "B", "61A-10319", 10.0, true,"null");
 			Car car2 = new Car("51E-83726", "Germany",
-					"SUV", "White", "no", "C", "61A-10319",10.6, false);
+					"SUV", "White", "no", "C", "61A-10319",10.6, false,"1");
 			Car car3 = new Car("50E-72637", "Italy",
-					"SUV", "Blue", "yes", "B", "61A-10319", 9.8, false);
+					"SUV", "Blue", "yes", "B", "61A-10319", 9.8, false, "2");
 			Car car4 = new Car("51E-82591", "China",
-					"SUV", "Red", "no", "A", "61A-10319", 6.5, false);
+					"SUV", "Red", "no", "A", "61A-10319", 6.5, false,"null");
 
 			session.beginTransaction();
 			session.save(car1);

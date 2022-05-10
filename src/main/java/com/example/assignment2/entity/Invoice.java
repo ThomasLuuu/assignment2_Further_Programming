@@ -3,7 +3,9 @@ package com.example.assignment2.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Invoice")
+@Table(name = "Invoice", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"driverID", "customerID"})
+})
 public class Invoice  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -11,9 +13,10 @@ public class Invoice  {
 
     @Column(name ="invoiceID")
     private String invoiceID;
+
     @Column(name="driverID")
     private String driverID;
-    @Column(name ="customerID")
+    @Column(name="customerID")
     private String customerID;
     @Column(name ="total_charge")
     private String totalCharge;

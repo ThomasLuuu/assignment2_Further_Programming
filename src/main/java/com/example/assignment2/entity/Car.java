@@ -29,8 +29,10 @@ public class Car {
     private double ratePerKm;
     @Column(name = "status")
     private boolean status;
+    @Column(name = "driver_Id")
+    private String driverId;
 
-    public Car(String carID, String make, String model, String color, String convertible, String rating, String licensePlate, double ratePerKm, boolean status) {
+    public Car(String carID, String make, String model, String color, String convertible, String rating, String licensePlate, double ratePerKm, boolean status, String driverId) {
         this.carID = carID;
         this.make = make;
         this.model = model;
@@ -40,6 +42,7 @@ public class Car {
         this.licensePlate = licensePlate;
         this.ratePerKm = ratePerKm;
         this.status = status;
+        this.driverId = driverId;
     }
 
 
@@ -127,6 +130,14 @@ public class Car {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public String getDriverId() {
+        return driverId;
+    }
+
+    public void setDriverId(String driverId) {
+        this.driverId = driverId;
     }
 
     @Override

@@ -9,8 +9,8 @@ public class Booking {
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name ="bookingID")
-    private String bookingID;
+    @Column(name ="customer_ID")
+    private String customerID;
     @Column( name = "starting_location")
     private String statLocation;
     @Column( name = "ending_location")
@@ -30,8 +30,8 @@ public class Booking {
     @Column ( name = "total_charge")
     private String totalCharge;
 
-    public Booking(String bookingID, String statLocation, String endLocation, String pickUpDateTime, String dropOffDateTime, Float distance, String invoiceID, String customer, String driver, String totalCharge) {
-        this.bookingID = bookingID;
+    public Booking(String customerID, String statLocation, String endLocation, String pickUpDateTime, String dropOffDateTime, Float distance, String invoiceID, String customer, String driver, String totalCharge) {
+        this.customerID = customerID;
         this.statLocation = statLocation;
         this.endLocation = endLocation;
         this.pickUpDateTime = pickUpDateTime;
@@ -59,12 +59,12 @@ public class Booking {
     public Booking(String invoiceID, String customer, String driver, String totalCharge) {
     }
 
-    public String getBookingID() {
-        return bookingID;
+    public String getCustomerID() {
+        return customerID;
     }
 
-    public void setBookingID(String bookingID) {
-        this.bookingID = bookingID;
+    public void setCustomerID(String customerID) {
+        this.customerID = customerID;
     }
 
     public String getStatLocation() {

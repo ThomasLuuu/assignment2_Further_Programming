@@ -23,6 +23,7 @@ public class BookingService {
     }
     //Create
     public Booking saveBooking(Booking booking){return bookingRepository.save(booking);}
+
     //Update
     public  Booking updateBooking(Booking booking){return bookingRepository.save(booking);}
     //Delete
