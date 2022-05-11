@@ -17,6 +17,14 @@ public class BookingController {
     @Autowired
     private CarService carService;
 
+    public boolean checkAuthorization(String userID, String Booker){
+        boolean author = false;
+        if(userID.equalsIgnoreCase(Booker)){
+            author = true;
+        }
+        return author;
+    }
+
 
     @PostMapping("/addBooking")
     public Booking addBooking(@RequestBody Booking booking){
@@ -28,14 +36,22 @@ public class BookingController {
         return carService.findCarByStatusTrue();
     }
 
-    @GetMapping( "/Booking/{pageSize},{pageNo}")
+    //localhost:8080/Booking/page/3,0
+    @GetMapping( "/Booking/page/{pageSize},{pageNo}")
     public List<Booking> findAllBooking(@PathVariable int pageSize,@PathVariable  int pageNo){
         PageRequest pageable = PageRequest.of(pageNo,pageSize);
         return this.bookingService.findAllBooking(pageable).getContent();
     }
-    @PutMapping("/addBooking/{bookingID}/available/{carID}")
-    public Booking updateBooking(@RequestBody Booking booking){
-        return bookingService.updateBooking(booking);
+    @PutMapping("/addBooking/{bookingID}/available/{userID}")
+    public Booking updateBooking(@RequestBody Booking booking,
+                                 @PathVariable("userID") String userID,
+                                 @PathVariable("booker") String booker){
+        if (checkAuthorization(userID, booker)) {
+            return bookingService.updateBooking(booking);
+        }else {
+            System.out.println("you dont have right to do it");
+            return null;
+        }
     }
     @GetMapping("Booking/{id}")
     public Booking findBookingById(@PathVariable("id") Long id){
