@@ -23,9 +23,10 @@ public class Driver implements Serializable {
     private String phone;
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "Driver", referencedColumnName = "name")
-    private List<Car> car;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "Driver")
+    private Car car;
+
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL)

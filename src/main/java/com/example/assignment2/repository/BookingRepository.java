@@ -17,4 +17,6 @@ public interface BookingRepository extends JpaRepository<Booking, Long>{
     countQuery = "select count(*) from Booking ",
     nativeQuery = true)
     Page<Booking> findALlBooking(Pageable pageable);
+
+
 }

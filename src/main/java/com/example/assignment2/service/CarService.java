@@ -1,9 +1,12 @@
 package com.example.assignment2.service;
 
 
+import com.example.assignment2.entity.Booking;
 import com.example.assignment2.entity.Car;
 import com.example.assignment2.repository.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,11 +22,12 @@ public class CarService {
         this.carRepository= carRepository;
     }
     //Read
-    public List<Car> findAllCar(){
-        return carRepository.findAll();
+    public Page<Car> findAllCar(Pageable pageable){
+        return (Page<Car>) carRepository.findAllCar(pageable);
+
     }
-    public Optional<Car> findCarById(Long id){
-        return carRepository.findById(id);
+    public Car  findCarById(Long id){
+        return carRepository.findById(id).orElse(null);
     }
     //Create
     public Car saveCar(Car car){
@@ -31,11 +35,23 @@ public class CarService {
     }
     //Update
     public Car updateCar(Car car){
-        return carRepository.save(car);
+        Car carExist = carRepository.findById(car.getCar_id()).orElse(null);
+        carExist.setColor(car.getColor());
+        carExist.setConvertible(car.getConvertible());
+        carExist.setDriver(car.getDriver());
+        carExist.setLicensePlate(car.getLicensePlate());
+        carExist.setModel(car.getModel());
+        carExist.setMake(car.getMake());
+        carExist.setRatePerKm(car.getRatePerKm());
+        carExist.setRating(car.getRating());
+        carExist.setStatus(car.isStatus());
+        return carRepository.save(carExist);
     }
     //Delete
     public void deleteCar(Long id){
         carRepository.deleteById(id);
     }
     public List<Car> findCarByStatusTrue(){return carRepository.findCarViaStatus();}
+
+
 }

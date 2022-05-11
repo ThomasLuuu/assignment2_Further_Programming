@@ -1,5 +1,6 @@
 package com.example.assignment2.controller;
 import com.example.assignment2.entity.Car;
+import com.example.assignment2.repository.CarRepository;
 import com.example.assignment2.service.CarService;
 import com.example.assignment2.entity.Booking;
 import com.example.assignment2.service.BookingService;
@@ -26,24 +27,24 @@ public class BookingController {
     }
 
 
-    @PostMapping("/addBooking")
+    @PostMapping("/addbooking")
     public Booking addBooking(@RequestBody Booking booking){
         return bookingService.saveBooking(booking);
     }
-    @GetMapping("/addBooking/{bookingID}/available")
+    @GetMapping("/addbooking/{bookingID}/available")
     public List<Car> findCarByStatusTrue() throws IOException {
         System.out.println("You have done this ");
         return carService.findCarByStatusTrue();
     }
 
     //localhost:8080/Booking/page/3,0
-    @GetMapping( "/Booking/page/{pageSize},{pageNo}")
+    @GetMapping( "/booking/page/{pageSize},{pageNo}")
     public List<Booking> findAllBooking(@PathVariable int pageSize,@PathVariable  int pageNo){
         PageRequest pageable = PageRequest.of(pageNo,pageSize);
         return this.bookingService.findAllBooking(pageable).getContent();
     }
-    @PutMapping("/addBooking/{bookingID}/available/{userID}")
-    public Booking updateBooking(@RequestBody Booking booking,
+    @PutMapping("/addbooking/{bookingID}/available/{userID}")
+    public  Booking updateBooking(@RequestBody Booking booking,
                                  @PathVariable("userID") String userID,
                                  @PathVariable("booker") String booker){
         if (checkAuthorization(userID, booker)) {
@@ -53,12 +54,12 @@ public class BookingController {
             return null;
         }
     }
-    @GetMapping("Booking/{id}")
+    @GetMapping("booking/{id}")
     public Booking findBookingById(@PathVariable("id") Long id){
         return bookingService.findBookingById(id);
     }
-    @DeleteMapping("Delete/{id}")
-    public void  deleteBookingById(@PathVariable("id") Long id){
-        bookingService.deleteBookingById(id);
-    }
+//    @DeleteMapping("deletebooking/{id}")
+//    public void  deleteBookingById(@PathVariable("id") Long id){
+//        bookingService.deleteBookingById(id);
+//    }
 }
