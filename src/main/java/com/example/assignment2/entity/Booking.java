@@ -1,70 +1,60 @@
 package com.example.assignment2.entity;
+import com.fasterxml.jackson.annotation.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDateTime;
+import java.util.*;
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
-@Table(name = "Bookings")
+@Table(name = "Booking")
 public class Booking {
     @Id
-    @GeneratedValue(strategy =  GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name ="customer_ID")
-    private String customerID;
-    @Column( name = "starting_location")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long booking_id;
+    @CreationTimestamp
+    @Column(name ="date",  nullable = false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date date;
     private String statLocation;
-    @Column( name = "ending_location")
     private String endLocation;
-    @Column (name = "pick_up_date_time")
     private String pickUpDateTime;
-    @Column ( name = "drop_off_date_time")
     private String dropOffDateTime;
-    @Column ( name = "distance")
-    private Float distance;
-    @Column ( name = "invoiceID")
-    private String invoiceID;
-    @Column ( name = "customer")
-    private String customer;
-    @Column ( name = "driver")
-    private String driver;
-    @Column ( name = "total_charge")
-    private String totalCharge;
+    private double distance;
 
-    public Booking(String customerID, String statLocation, String endLocation, String pickUpDateTime, String dropOffDateTime, Float distance, String invoiceID, String customer, String driver, String totalCharge) {
-        this.customerID = customerID;
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name ="customer_id", referencedColumnName = "customer_id")
+    private Customer customer;
+
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name ="car_id", referencedColumnName = "car_id")
+    private Car car;
+
+    public Booking( String statLocation, String endLocation, String pickUpDateTime, String dropOffDateTime, double distance, Customer customer, Car car) {
         this.statLocation = statLocation;
         this.endLocation = endLocation;
         this.pickUpDateTime = pickUpDateTime;
         this.dropOffDateTime = dropOffDateTime;
         this.distance = distance;
-        this.invoiceID = invoiceID;
         this.customer = customer;
-        this.driver = driver;
-        this.totalCharge = totalCharge;
-    }
-    public Booking() {
-    }
-    public Booking(Long id) {
-        this.id = id;
+        this.car = car;
     }
 
-    public Long getId() {
-        return id;
+    public Date getDate() {
+        return date;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Booking(String invoiceID, String customer, String driver, String totalCharge) {
-    }
-
-    public String getCustomerID() {
-        return customerID;
-    }
-
-    public void setCustomerID(String customerID) {
-        this.customerID = customerID;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public String getStatLocation() {
@@ -99,45 +89,27 @@ public class Booking {
         this.dropOffDateTime = dropOffDateTime;
     }
 
-    public Float getDistance() {
+    public double getDistance() {
         return distance;
     }
 
-    public void setDistance(Float distance) {
+    public void setDistance(double distance) {
         this.distance = distance;
     }
 
-    public String getInvoiceID() {
-        return invoiceID;
-    }
-
-    public void setInvoiceID(String invoiceID) {
-        this.invoiceID = invoiceID;
-    }
-
-    public String getCustomer() {
+    public Customer getCustomer() {
         return customer;
     }
 
-    public void setCustomer(String customer) {
+    public void setCustomer(Customer customer) {
         this.customer = customer;
     }
 
-    public String getDriver() {
-        return driver;
+    public Car getCar() {
+        return car;
     }
 
-    public void setDriver(String driver) {
-        this.driver = driver;
+    public void setCar(Car car) {
+        this.car = car;
     }
-
-    public String getTotalCharge() {
-        return totalCharge;
-    }
-
-    public void setTotalCharge(String totalCharge) {
-        this.totalCharge = totalCharge;
-    }
-
-
 }

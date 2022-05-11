@@ -1,72 +1,40 @@
 package com.example.assignment2.entity;
+import com.fasterxml.jackson.annotation.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
-@Table(name = "Drivers")
-public class Driver {
+@Table(name = "Driver")
+public class Driver implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(name ="driver_ID")
-    private String driverID;
-    @Column(name = "license_number")
-    private String licenseNumber;
-    @Column(name = "phone_number")
-    private String phoneNumber;
-    @Column(name = "rate")
-    private double rate;
+    private Long driver_id;
+    private String name;
+    private String license_id;
+    private String phone;
 
-    public Driver(String driverID, String licenseNumber, String phoneNumber, double rate) {
-        this.driverID = driverID;
-        this.licenseNumber = licenseNumber;
-        this.phoneNumber = phoneNumber;
-        this.rate = rate;
-    }
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "Driver", referencedColumnName = "name")
+    private List<Car> car;
 
-    public Driver() {
-    }
-    public Driver(Long id) {
-        this.id = id;
-    }
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "Driver", referencedColumnName = "name")
+    private List<Invoice> invoice;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getDriverID() {
-        return driverID;
-    }
-
-    public void setDriverID(String driverID) {
-        this.driverID = driverID;
-    }
-
-    public String getLicenseNumber() {
-        return licenseNumber;
-    }
-
-    public void setLicenseNumber(String licenseNumber) {
-        this.licenseNumber = licenseNumber;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public double getRate() {
-        return rate;
-    }
-
-    public void setRate(double rate) {
-        this.rate = rate;
+    public Driver(String name, String license_id, String phone) {
+        this.name = name;
+        this.license_id = license_id;
+        this.phone = phone;
     }
 }

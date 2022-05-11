@@ -1,5 +1,6 @@
 package com.example.assignment2.service;
 
+
 import com.example.assignment2.entity.Car;
 import com.example.assignment2.repository.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,8 @@ import java.util.Optional;
 
 @Service
 public class CarService {
+
+
     @Autowired
     private final CarRepository carRepository;
     public CarService(CarRepository carRepository){
@@ -34,6 +37,5 @@ public class CarService {
     public void deleteCar(Long id){
         carRepository.deleteById(id);
     }
-    public List<Car> findCarByStatusTrue(){return carRepository.findByStatusTrue();}
-
+    public List<Car> findCarByStatusTrue(){return carRepository.findCarViaStatus();}
 }

@@ -1,74 +1,37 @@
 package com.example.assignment2.entity;
+import com.fasterxml.jackson.annotation.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+@Data
+@NoArgsConstructor
 @Entity
-@Table(name = "Invoice", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"driverID", "customerID"})
-})
-public class Invoice  {
+@Table(name = "Invoice")
+public class Invoice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long invoice_id;
+    private Float total_charge;
 
-    @Column(name ="invoiceID")
-    private String invoiceID;
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name ="Customer", referencedColumnName = "name")
+    private Customer customer;
 
-    @Column(name="driverID")
-    private String driverID;
-    @Column(name="customerID")
-    private String customerID;
-    @Column(name ="total_charge")
-    private String totalCharge;
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name ="Driver", referencedColumnName = "name")
+    private Driver driver;
 
-    public Invoice() {
+    public Invoice(Long invoice_id, Float total_charge, Customer customer, Driver driver) {
+        this.invoice_id = invoice_id;
+        this.total_charge = total_charge;
+        this.customer = customer;
+        this.driver = driver;
     }
 
-    public Invoice(Long id, String invoiceID, String driverID, String customerID, String totalCharge) {
-        this.id = id;
-        this.invoiceID = invoiceID;
-        this.driverID = driverID;
-        this.customerID = customerID;
-        this.totalCharge = totalCharge;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getInvoiceID() {
-        return invoiceID;
-    }
-
-    public void setInvoiceID(String invoiceID) {
-        this.invoiceID = invoiceID;
-    }
-
-    public String getDriverID() {
-        return driverID;
-    }
-
-    public void setDriverID(String driverID) {
-        this.driverID = driverID;
-    }
-
-    public String getCustomerID() {
-        return customerID;
-    }
-
-    public void setCustomerID(String customerID) {
-        this.customerID = customerID;
-    }
-
-    public String getTotalCharge() {
-        return totalCharge;
-    }
-
-    public void setTotalCharge(String totalCharge) {
-        this.totalCharge = totalCharge;
-    }
 }

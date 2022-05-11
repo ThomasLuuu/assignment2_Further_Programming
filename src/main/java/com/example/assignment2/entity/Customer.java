@@ -1,63 +1,37 @@
 package com.example.assignment2.entity;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import javax.persistence.*;
-@Entity
-@Table(name = "Customers")
+import java.io.Serializable;
+import java.util.List;
 
-public class Customer {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "Customer")
+
+public class Customer implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long customer_id;
+    private String name;
+    private String phone;
 
-    @Column(name = "customerID")
-    private String customerID;
-    @Column( name = "customer_Name")
-    private String customerName;
-    @Column( name = "phone_Number")
-    private String phoneNumber;
+    @JsonIgnore
+    @ManyToMany(targetEntity = Booking.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "Customer_id", referencedColumnName = "customer_id")
+    private List<Booking> booking;
 
-    public Customer(String customerID, String customerName, String phoneNumber) {
-        this.customerID = customerID;
-        this.customerName = customerName;
-        this.phoneNumber = phoneNumber;
-    }
+    @JsonIgnore
+    @ManyToMany(targetEntity = Invoice.class,cascade = CascadeType.ALL)
+    @JoinColumn(name = "Customer", referencedColumnName = "name")
+    private List<Invoice> invoice;
 
-    public Customer() {
-    }
-
-    public Customer(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getCustomerID() {
-        return customerID;
-    }
-
-    public void setCustomerID(String customerID) {
-        this.customerID = customerID;
-    }
-
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public Customer( String name, String phone){
+        this.name = name;
+        this.phone = phone;
     }
 }

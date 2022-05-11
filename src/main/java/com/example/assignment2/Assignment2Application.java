@@ -1,119 +1,65 @@
 package com.example.assignment2;
-import org.springframework.boot.CommandLineRunner;
-import com.example.assignment2.entity.Customer;
-import com.example.assignment2.entity.Car;
-import com.example.assignment2.entity.Driver;
-import com.example.assignment2.repository.CarRepository;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import com.example.assignment2.repository.*;
+import com.example.assignment2.entity.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+import java.text.ParseException;
+import java.util.Arrays;
 import java.util.List;
 
 @SpringBootApplication
 public class Assignment2Application {
 
-	public static synchronized SessionFactory getSessionFactory(Customer customer) {
-		return new Configuration()
-				.configure()
-				.addAnnotatedClass(customer.getClass())
-				.buildSessionFactory();
-	}
 
-	public static synchronized SessionFactory getSessionFactory(Car car) {
-		return new Configuration()
-				.configure()
-				.addAnnotatedClass(car.getClass())
-				.buildSessionFactory();
-	}
-
-	public static synchronized SessionFactory getSessionFactory(Driver driver) {
-		return new Configuration()
-				.configure()
-				.addAnnotatedClass(driver.getClass())
-				.buildSessionFactory();
-	}
 
 	public static void main(String[] args) {
-		SpringApplication.run(Assignment2Application.class, args);
+		ConfigurableApplicationContext configurableApplicationContext =
+				SpringApplication.run(Assignment2Application.class, args);
 		System.out.println("The system is running!!");
 
-		//Create a dummy customer to invoke the class in getSessionFactory() method
-		Customer dummyCustomer = new Customer();
-		Car dummyCar = new Car();
-		Driver dummyDriver = new Driver();
+		//<editor-fold desc="REPOSITORY">
+		BookingRepository bookingRepository = configurableApplicationContext.getBean(BookingRepository.class);
+		CarRepository carRepository = configurableApplicationContext.getBean(CarRepository.class);
+		CustomerRepository customerRepository = configurableApplicationContext.getBean(CustomerRepository.class);
+		DriverRepository driverRepository = configurableApplicationContext.getBean(DriverRepository.class);
+		InvoiceRepository invoiceRepository = configurableApplicationContext.getBean(InvoiceRepository.class);
+
+		//<editor-fold desc="Driver">
+		Driver driver1 = new Driver("Thor","666AAA","0789789789");
+		Driver driver2 = new Driver("Thanos","777PPP","0123123123");
+		Driver driver3 = new Driver("Vision","999SSS","0456456456");
+		List<Driver> drivers = Arrays.asList(driver1,driver2,driver3);
+		driverRepository.saveAll(drivers);
+		//<editor-fold desc="Customer">
+		Customer customer1 = new Customer("Thomas","0833386258");
+		Customer customer2 = new Customer("Duc","0933993399");
+		Customer customer3 = new Customer("Tin","069696969");
+		List<Customer> customers = Arrays.asList(customer1,customer2,customer3);
+		customerRepository.saveAll(customers);
 
 
+		//		<editor-fold desc="Car">
+		Car car1 = new Car("Lexus", "c1","pink","not convertible", "3.9", "61A-33333",3,false,driver1);
+		Car car2 = new Car("Vios", "c200","black","not convertible", "3", "99A-99999",4,true,driver2);
+		Car car3 = new Car("G63", "A8","white","not convertible", "5", "49A-5353",5,false,driver3);
+		List<Car> cars = Arrays.asList(car1, car2, car3);
+		carRepository.saveAll(cars);
 
-		SessionFactory customerFactory = getSessionFactory(dummyCustomer);
-		SessionFactory carFactory = getSessionFactory(dummyCar);
-		SessionFactory driverFactory = getSessionFactory(dummyDriver);
+		//<editor-fold desc="Booking">
+		Booking booking1 = new Booking("Sai Gon","Ha Noi","12:00","22:00",1000,customer1,car1);
+		Booking booking2 = new Booking("New York","China","1:00","24:00",2222,customer2,car2);
+		Booking booking3 = new Booking("Wakanda","Lost Kingdom","1:00","2:00",69.69,customer3,car3);
+		List<Booking> bookings = Arrays.asList(booking1,booking2,booking3);
+		bookingRepository.saveAll(bookings);
 
-		try (customerFactory; Session session = customerFactory.getCurrentSession()) {
-			Customer customer = new Customer("c001", "Khang", "0911111");
-			Customer customer1 = new Customer("c002", "Tin", "0911112");
-			Customer customer2 = new Customer("c003", "Toan", "0911113");
-			Customer customer3 = new Customer("c004", "Duc", "0911114");
-
-			session.beginTransaction();
-			session.save(customer);
-			session.save(customer1);
-			session.save(customer2);
-			session.save(customer3);
-			session.getTransaction().commit();
-			System.out.println("Customers added successfully!");
-		}
-
-		try (carFactory; Session session = carFactory.getCurrentSession()) {
-			Car car1 = new Car( "50E-23122 ", "Germany",
-					"SUV", "Black", "yes", "B", "61A-10319", 10.0, true,"null");
-			Car car2 = new Car("51E-83726", "Germany",
-					"SUV", "White", "no", "C", "61A-10319",10.6, false,"1");
-			Car car3 = new Car("50E-72637", "Italy",
-					"SUV", "Blue", "yes", "B", "61A-10319", 9.8, false, "2");
-			Car car4 = new Car("51E-82591", "China",
-					"SUV", "Red", "no", "A", "61A-10319", 6.5, false,"null");
-
-			session.beginTransaction();
-			session.save(car1);
-			session.save(car2);
-			session.save(car3);
-			session.save(car4);
-			session.getTransaction().commit();
-			System.out.println("Cars added successfully");
-		}
-
-		try (driverFactory; Session session = driverFactory.getCurrentSession()) {
-			Driver driver1 = new Driver("d001", "12345", "90867474", 3.1);
-			Driver driver2 = new Driver("d002", "33456", "90006700", 4.0);
-			Driver driver3 = new Driver("d003", "45698", "90003065", 3.9);
-			Driver driver4 = new Driver("d004", "78659", "90078695", 2.1);
-
-			session.beginTransaction();
-			session.save(driver1);
-			session.save(driver2);
-			session.save(driver3);
-			session.save(driver4);
-			session.getTransaction().commit();
-			System.out.println("Drivers added successfully");
-		}
 
 	}
 
-//	@Bean
-//	@Transactional
-//	public CommandLineRunner demo(CarRepository carRepository){
-//		return (args) ->{
-//			List<GetMake> c = carRepository.findMake();
-//			printOnlyMake(c);
-//
-//		};
-//
-//	}
+
 
 
 

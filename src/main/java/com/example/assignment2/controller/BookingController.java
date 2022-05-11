@@ -1,53 +1,48 @@
 package com.example.assignment2.controller;
-
-import com.example.assignment2.service.BookingService;
+import com.example.assignment2.entity.Car;
+import com.example.assignment2.service.CarService;
 import com.example.assignment2.entity.Booking;
+import com.example.assignment2.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @RestController
-@RequestMapping("/booking")
-
 public class BookingController {
     @Autowired
-    private final BookingService bookingService;
+    private BookingService bookingService;
+    @Autowired
+    private CarService carService;
 
 
-
-    public BookingController(BookingService bookingService){
-        this.bookingService = bookingService;
+    @PostMapping("/addBooking")
+    public Booking addBooking(@RequestBody Booking booking){
+        return bookingService.saveBooking(booking);
+    }
+    @GetMapping("/addBooking/{bookingID}/available")
+    public List<Car> findCarByStatusTrue() throws IOException {
+        System.out.println("You have done this ");
+        return carService.findCarByStatusTrue();
     }
 
-    @GetMapping
-    public List<Booking> findAllBooking(){
-        List<Booking> listBooking = bookingService.findAllBooking();
-        Collections.sort(listBooking, Comparator.comparingLong(Booking::getId));
-        return listBooking;
+    @GetMapping( "/Booking/{pageSize},{pageNo}")
+    public List<Booking> findAllBooking(@PathVariable int pageSize,@PathVariable  int pageNo){
+        PageRequest pageable = PageRequest.of(pageNo,pageSize);
+        return this.bookingService.findAllBooking(pageable).getContent();
     }
-
-    @GetMapping("/{id}")
-    public  Optional<Booking> findBookingById(@PathVariable("id") Long id){
-        System.out.println("this is: " + id);
+    @PutMapping("/addBooking/{bookingID}/available/{carID}")
+    public Booking updateBooking(@RequestBody Booking booking){
+        return bookingService.updateBooking(booking);
+    }
+    @GetMapping("Booking/{id}")
+    public Booking findBookingById(@PathVariable("id") Long id){
         return bookingService.findBookingById(id);
     }
-
-    @PostMapping
-    public Booking saveBooking(@RequestBody Booking booking){return bookingService.saveBooking(booking);}
-
-    @PutMapping
-    public  Booking updateBooking(@RequestBody Booking booking){return bookingService.updateBooking(booking);}
-
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    @ResponseBody
-    public String deleteBooKingById(@PathVariable("id") Long id){
-        bookingService.deleteBooking(id);
-        return "delete succesfully";
+    @DeleteMapping("Delete/{id}")
+    public void  deleteBookingById(@PathVariable("id") Long id){
+        bookingService.deleteBookingById(id);
     }
-
 }

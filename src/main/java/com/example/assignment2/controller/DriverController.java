@@ -1,45 +1,4 @@
 package com.example.assignment2.controller;
-import com.example.assignment2.service.DriverService;
-import com.example.assignment2.entity.Driver;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
-
-@RestController
-@RequestMapping("/driver")
 
 public class DriverController {
-    private final DriverService driverService;
-
-    public DriverController(DriverService driverService){
-        this.driverService= driverService;
-    }
-
-    @GetMapping
-    public List<Driver> findAllDriver(){
-        List<Driver> listDriver = driverService.findAllDriver();
-        Collections.sort(listDriver, Comparator.comparingLong(Driver::getId));
-        return listDriver;
-    }
-    @GetMapping("/{id}")
-    public Optional<Driver> findDriverById(@PathVariable("id") Long id){
-        System.out.println("This is: " + id);
-        return driverService.findDriverbyId(id);
-
-    }
-    @PostMapping
-    public Driver saveDriver(@RequestBody Driver driver){return driverService.saveDriver(driver);}
-    @PutMapping
-    public Driver updateDriver(@RequestBody Driver driver){return driverService.updateDriver(driver);}
-
-    @RequestMapping(value ="/{id}", method = RequestMethod.DELETE)
-    @ResponseBody
-    public String deleteDriver(@PathVariable("id") Long id){
-        driverService.deleteDriver(id);
-        return "delete successfully";
-    }
-
 }
