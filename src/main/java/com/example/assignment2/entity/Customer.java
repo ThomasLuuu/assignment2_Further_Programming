@@ -21,8 +21,8 @@ public class Customer implements Serializable {
     private String phone;
 
     @JsonIgnore
-    @ManyToMany(targetEntity = Booking.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "Customer_id", referencedColumnName = "customer_id")
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+//    @JoinColumn(name = "Customer_id", referencedColumnName = "customer_id")
     private List<Booking> booking;
 
     @JsonIgnore
