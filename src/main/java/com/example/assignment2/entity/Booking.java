@@ -31,15 +31,25 @@ public class Booking {
     private String dropOffDateTime;
     private double distance;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name ="customer_id", referencedColumnName = "customer_id")
+//    @ManyToOne(cascade = CascadeType.MERGE)
+//    @JoinColumn(name ="customer_id", referencedColumnName = "customer_id")
+//    private Customer customer;
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name ="car_id", referencedColumnName = "car_id")
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name ="car_id", nullable = false)
     private Car car;
 
-    public Booking( String statLocation, String endLocation, String pickUpDateTime, String dropOffDateTime, double distance, Customer customer, Car car) {
+    @JsonIgnore
+    @OneToOne
+    @JoinColumn(name = "invoice_id", referencedColumnName = "invoice_id")
+    private Invoice invoice;
+
+    public Booking( String statLocation, String endLocation, String pickUpDateTime, String dropOffDateTime, double distance, Customer customer, Car car, Invoice invoice) {
         this.statLocation = statLocation;
         this.endLocation = endLocation;
         this.pickUpDateTime = pickUpDateTime;
@@ -47,6 +57,7 @@ public class Booking {
         this.distance = distance;
         this.customer = customer;
         this.car = car;
+        this.invoice = invoice;
     }
 
     public Date getDate() {
@@ -111,5 +122,13 @@ public class Booking {
 
     public void setCar(Car car) {
         this.car = car;
+    }
+
+    public Invoice getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(Invoice invoice) {
+        this.invoice = invoice;
     }
 }

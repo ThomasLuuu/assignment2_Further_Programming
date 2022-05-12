@@ -23,15 +23,14 @@ public class Driver implements Serializable {
     private String phone;
 
     @JsonIgnore
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "Driver")
+    @OneToOne
     private Car car;
 
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "Driver", referencedColumnName = "name")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "driver")
     private List<Invoice> invoice;
+
 
     public Driver(String name, String license_id, String phone) {
         this.name = name;

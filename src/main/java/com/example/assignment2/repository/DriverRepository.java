@@ -1,5 +1,4 @@
 package com.example.assignment2.repository;
-import com.example.assignment2.entity.Customer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

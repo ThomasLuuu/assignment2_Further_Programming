@@ -20,14 +20,17 @@ public class Customer implements Serializable {
     private String name;
     private String phone;
 
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+////    @JoinColumn(name = "Customer_id", referencedColumnName = "customer_id")
+//    private List<Booking> booking;
+
     @JsonIgnore
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-//    @JoinColumn(name = "Customer_id", referencedColumnName = "customer_id")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
     private List<Booking> booking;
 
     @JsonIgnore
-    @ManyToMany(targetEntity = Invoice.class,cascade = CascadeType.ALL)
-    @JoinColumn(name = "Customer", referencedColumnName = "name")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
     private List<Invoice> invoice;
 
     public Customer( String name, String phone){

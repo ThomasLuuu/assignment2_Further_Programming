@@ -27,8 +27,9 @@ public class Car {
     private double ratePerKm;
     private boolean status;
 
-    @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "Driver")
+
+    @OneToOne
+    @JoinColumn(name = "driver_id")
     private Driver driver;
 
 

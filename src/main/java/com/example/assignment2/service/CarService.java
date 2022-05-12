@@ -7,6 +7,7 @@ import com.example.assignment2.repository.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -47,11 +48,21 @@ public class CarService {
         carExist.setStatus(car.isStatus());
         return carRepository.save(carExist);
     }
+    public Car updateDriver(Car car){
+        Car carExist = carRepository.findById(car.getCar_id()).orElse(null);
+        carExist.setDriver(car.getDriver());
+        return carRepository.save(carExist);
+
+
+    }
     //Delete
     public void deleteCar(Long id){
         carRepository.deleteById(id);
     }
     public List<Car> findCarByStatusTrue(){return carRepository.findCarViaStatus();}
 
+    public List<Car> findCarByNullDriver(){return  carRepository.findCarNullDriver();}
+
+//    public void updateCarDriver(){return carRepository.updateCarDriver(Long id, Car car)}
 
 }
