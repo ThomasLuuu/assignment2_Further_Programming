@@ -1,17 +1,12 @@
 package com.example.assignment2.controller;
 
-import com.example.assignment2.entity.Car;
 import com.example.assignment2.entity.Customer;
-import com.example.assignment2.repository.CarRepository;
 import com.example.assignment2.service.CustomerService;
-import com.example.assignment2.entity.Booking;
-import com.example.assignment2.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
 
 @RestController
 public class CustomerController {

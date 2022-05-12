@@ -43,7 +43,7 @@ public class BookingController {
         PageRequest pageable = PageRequest.of(pageNo,pageSize);
         return this.bookingService.findAllBooking(pageable).getContent();
     }
-    @PutMapping("/addbooking/{bookingID}/available/{userID}")
+    @PutMapping("/addbooking/{booker}/available/{userID}")
     public  Booking updateBooking(@RequestBody Booking booking,
                                  @PathVariable("userID") String userID,
                                  @PathVariable("booker") String booker){
