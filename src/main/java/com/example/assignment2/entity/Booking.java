@@ -4,7 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import javax.persistence.*;
@@ -22,9 +24,9 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long booking_id;
     @CreationTimestamp
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     @Column(name ="date",  nullable = false, updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date date;
+    private LocalDate date;
     private String statLocation;
     private String endLocation;
     private String pickUpDateTime;
@@ -49,7 +51,7 @@ public class Booking {
     @JoinColumn(name = "invoice_id", referencedColumnName = "invoice_id")
     private Invoice invoice;
 
-    public Booking( String statLocation, String endLocation, String pickUpDateTime, String dropOffDateTime, double distance, Customer customer, Car car, Invoice invoice) {
+    public Booking( String statLocation, String endLocation, String pickUpDateTime, String dropOffDateTime, double distance, Customer customer, Car car) {
         this.statLocation = statLocation;
         this.endLocation = endLocation;
         this.pickUpDateTime = pickUpDateTime;
@@ -57,14 +59,14 @@ public class Booking {
         this.distance = distance;
         this.customer = customer;
         this.car = car;
-        this.invoice = invoice;
+
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -124,11 +126,11 @@ public class Booking {
         this.car = car;
     }
 
-    public Invoice getInvoice() {
-        return invoice;
-    }
-
-    public void setInvoice(Invoice invoice) {
-        this.invoice = invoice;
-    }
+//    public Invoice getInvoice() {
+//        return invoice;
+//    }
+//
+//    public void setInvoice(Invoice invoice) {
+//        this.invoice = invoice;
+//    }
 }

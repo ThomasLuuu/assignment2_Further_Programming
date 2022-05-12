@@ -39,5 +39,10 @@ public class CarController {
     public Car updateCar(@RequestBody Car car){
         return carService.updateCar(car);
     }
+
+    @GetMapping("/usedcar")
+    public String getDay(){
+        return carService.getDay();
+    }
 }
 

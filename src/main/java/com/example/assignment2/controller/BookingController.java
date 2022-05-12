@@ -7,7 +7,10 @@ import com.example.assignment2.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Date;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
@@ -59,5 +62,17 @@ public class BookingController {
     @GetMapping("booking/{id}")
     public Booking findBookingById(@PathVariable("id") Long id) {
         return bookingService.findBookingById(id);
+    }
+
+    @GetMapping("booking/filter/{dayStart},{monthStart},{yearStart}/{dayEnd},{monthEnd},{yearEnd}")
+    public List<Booking> filterBookingByDate(@PathVariable("dayStart") int dayStart,
+                                             @PathVariable("monthStart") int monthStart,
+                                             @PathVariable("yearStart") int yearStart,
+                                             @PathVariable("dayEnd") int dayEnd,
+                                             @PathVariable("monthEnd") int monthEnd,
+                                             @PathVariable("yearEnd") int yearEnd){
+        LocalDate start = LocalDate.of(yearStart,monthStart,dayStart);
+        LocalDate end = LocalDate.of(yearEnd,monthEnd,dayEnd);
+        return bookingService.filterBooking(start, end);
     }
 }

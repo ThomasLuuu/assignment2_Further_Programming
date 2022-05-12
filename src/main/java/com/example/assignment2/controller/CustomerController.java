@@ -38,4 +38,7 @@ public class CustomerController {
     public Customer updateCustomer(@RequestBody Customer customer) {
         return customerService.updateCustomer(customer);
     }
+    
+    @GetMapping("/search/{searchInput}")
+    public List<Customer> searchCustomer(@PathVariable("searchInput") String searchInput){return customerService.searchCustomer(searchInput);}
 }

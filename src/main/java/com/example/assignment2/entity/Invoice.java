@@ -3,13 +3,19 @@ import com.fasterxml.jackson.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.catalina.User;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "Invoice")
@@ -17,14 +23,21 @@ public class Invoice  implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long invoice_id;
+
+    @CreationTimestamp
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @Column(name ="date",  nullable = false, updatable = false)
+    private LocalDate date;
     private double total_charge;
 
-    @JsonIgnore
     @ManyToOne
+    @Cascade(org.hibernate.annotations.CascadeType.MERGE)
     @JoinColumn(name ="customer_id", nullable = false)
     private Customer customer;
 
-    @JsonIgnore
+
+
+
     @ManyToOne
     @JoinColumn(name ="driver_id", nullable = false)
     private Driver driver;
@@ -34,8 +47,8 @@ public class Invoice  implements Serializable {
     @JoinColumn(name = "invoice_id", referencedColumnName = "invoice_id")
     private Booking booking;
 
-    public Invoice(double total_charge, Customer customer, Driver driver) {
-        this.total_charge = total_charge;
+    public Invoice( double total_charge, Customer customer, Driver driver,Booking booking) {
+        this.total_charge = booking.getDistance() * 3;
         this.customer = customer;
         this.driver = driver;
     }
@@ -46,6 +59,14 @@ public class Invoice  implements Serializable {
 
     public void setTotal_charge(double total_charge) {
         this.total_charge = total_charge;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     public Customer getCustomer() {

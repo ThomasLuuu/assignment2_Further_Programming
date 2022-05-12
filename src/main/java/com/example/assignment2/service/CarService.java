@@ -3,15 +3,19 @@ package com.example.assignment2.service;
 
 import com.example.assignment2.entity.Booking;
 import com.example.assignment2.entity.Car;
+import com.example.assignment2.entity.Invoice;
 import com.example.assignment2.repository.CarRepository;
+import com.example.assignment2.repository.InvoiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.sql.Array;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.*;
 
 @Service
 public class CarService {
@@ -19,6 +23,10 @@ public class CarService {
 
     @Autowired
     private final CarRepository carRepository;
+
+    @Autowired
+    private InvoiceRepository invoiceRepository;
+
     public CarService(CarRepository carRepository){
         this.carRepository= carRepository;
     }
@@ -63,6 +71,23 @@ public class CarService {
 
     public List<Car> findCarByNullDriver(){return  carRepository.findCarNullDriver();}
 
-//    public void updateCarDriver(){return carRepository.updateCarDriver(Long id, Car car)}
 
+    public String getDay(){
+        int numDate = 1;
+        String result ="";
+        String space = "\n";
+        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+        Date date = new Date(System.currentTimeMillis());
+        Map<String, Integer> carDate = new HashMap<String, Integer>();
+        List<Car> cars = carRepository.findAll();
+        for (Car car : cars){
+            carDate.put(car.getLicensePlate(),numDate);
+            numDate +=1;
+        }
+        for(String key : carDate.keySet()){
+            result =result + key +" " + carDate.get(key) + "\n" ;
+        }
+        return date + "\n" +"Car    |    Days" + "\n" + result;
+
+    }
 }
