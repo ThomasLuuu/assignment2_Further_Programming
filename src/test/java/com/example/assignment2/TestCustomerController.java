@@ -4,8 +4,7 @@ import com.example.assignment2.controller.BookingController;
 import com.example.assignment2.controller.CustomerController;
 import com.example.assignment2.entity.Booking;
 import com.example.assignment2.entity.Customer;
-import com.example.assignment2.service.BookingService;
-import com.example.assignment2.service.CarService;
+import com.example.assignment2.service.CustomerService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,31 +28,39 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(BookingController.class)
+@WebMvcTest(CustomerController.class)
 //@ContextConfiguration(locations = "file:web/WEB-INF/applicationContext.xml")
-public class TestBookingController {
+public class TestCustomerController {
     @Autowired
-    private MockMvc mockMvc;
+    private MockMvc mvc;
 
     @MockBean
-    private BookingService bookingService;
-
-    @MockBean
-    private CarService carService;
-
+    private CustomerService customerService;
 
     @Test
-    public void testFindAllBooking() throws Exception{
+    public void findCustomerByIdTest() throws Exception {
+        mvc.perform(MockMvcRequestBuilders
+                .get("/customer/{id}", 1)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testFindAllCustomer() throws Exception {
         PageRequest pageable = PageRequest.of(0, 3);
-        Booking booking1 = new Booking("Sai Gon","","","",1000,null,null);
-        Booking booking2 = new Booking("New York","","","",2222,null,null);
-        Booking booking3 = new Booking("Wakanda","","","",69.69,null,null);
-        List<Booking> bookingList = new ArrayList<>(Arrays.asList(booking1,booking2,booking3));
-        Page<Booking> pageRes = new PageImpl<>(bookingList);
-        when (bookingService.findAllBooking(pageable)).thenReturn(pageRes);
-        mockMvc.perform(MockMvcRequestBuilders.get("/booking/page/3,0").accept(MediaType.APPLICATION_JSON))
+        Customer customer1 = new Customer("Thomas", "0833386258");
+        Customer customer2 = new Customer("Duc", "0933993399");
+        Customer customer3 = new Customer("Tin", "069696969");
+        List<Customer> bookingList = new ArrayList<>(Arrays.asList(customer1, customer2, customer3));
+        Page<Customer> pageRes = new PageImpl<>(bookingList);
+        when(customerService.findAllCustomer(pageable)).thenReturn(pageRes);
+        mvc.perform(MockMvcRequestBuilders.get("/customer/page/3,0").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(200));
     }
 
+//    @Test
+//    public void deleteCustomerByIdTest() throws Exception {
+//        mvc.perform(MockMvcRequestBuilders.delete("/customer/delete/{id}", 1))
+//                .andExpect(status().isAccepted());
+//    }
 }
-
