@@ -9,7 +9,6 @@ import com.example.assignment2.repository.BookingRepository;
 import com.example.assignment2.service.BookingService;
 import com.example.assignment2.service.CarService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 import net.minidev.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Test;
