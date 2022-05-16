@@ -58,9 +58,5 @@ public class TestCustomerController {
                 .andExpect(status().is(200));
     }
 
-//    @Test
-//    public void deleteCustomerByIdTest() throws Exception {
-//        mvc.perform(MockMvcRequestBuilders.delete("/customer/delete/{id}", 1))
-//                .andExpect(status().isAccepted());
-//    }
+
 }
