@@ -33,7 +33,7 @@ public class BookingController {
     }
 
     // METHOD READ CAR AVAILABLE WHEN BOOKING
-    @GetMapping("/addbooking/{bookingID}/available")
+    @GetMapping("/addbooking/available")
     public List<Car> findCarByStatusTrue() throws IOException {
         return carService.findCarByStatusTrue();
     }
@@ -46,16 +46,10 @@ public class BookingController {
     }
 
     //METHOD UPDATE BOOKING WITH DRIVER INFORMATION
-    @PutMapping("/addbooking/{booker}/available/{userID}")
-    public Booking updateBooking(@RequestBody Booking booking,
-                                 @PathVariable("userID") String userID,
-                                 @PathVariable("booker") String booker) {
-        if (checkAuthorization(userID, booker)) {
+    @PutMapping("/addbooking/available/true")
+    public Booking updateBooking(@RequestBody Booking booking) {
             return bookingService.updateBooking(booking);
-        } else {
-            System.out.println("you dont have right to do it");
-            return null;
-        }
+
     }
 
     //METHOD READ BOOKING WITH BOOKING'S ID

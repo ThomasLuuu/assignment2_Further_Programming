@@ -46,17 +46,10 @@ public class Booking {
     private Car car;
 
 
-//    @OneToOne
-//    @JoinColumn(name = "invoice_id", referencedColumnName = "invoice_id", nullable = true)
-//    private Invoice invoice;
-
-//    @JsonIgnore
-//    @OneToOne
-//    @JoinColumn(name="invoice_id", nullable = true)
-//    private Invoice invoice;
-    @OneToOne(mappedBy = "booking")
-    @JoinColumn(name = "invoice_id", nullable = false)
+    @OneToOne
+    @JoinColumn(name = "invoice_id", referencedColumnName = "invoice_id", nullable = true)
     private Invoice invoice;
+
 
     public Booking( String statLocation, String endLocation, String pickUpDateTime, String dropOffDateTime, double distance, Customer customer, Car car, Invoice invoice) {
         this.statLocation = statLocation;

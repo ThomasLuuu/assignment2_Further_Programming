@@ -62,10 +62,10 @@ public class TestBookingController {
     Car car2 = new Car("Vios", "c200","black","not convertible", "3", "99A-99999",4,true,null);
     Car car3 = new Car("G63", "A8","white","not convertible", "5", "49A-5353",5,false,null);
 
-    Booking booking1 = new Booking("Sai Gon","Ha Noi","12:00","22:00",1000,null,car1);
-    Booking booking2 = new Booking("New York","China","1:00","24:00",2222,null,car2);
-    Booking booking3 = new Booking("Wakanda","Lost Kingdom","1:00","2:00",69.69,null,car3);
-    Booking bookingNew = new Booking("Su Van Hanh","Lost Kingdom","1:00","2:00",69.69,null,null);
+    Booking booking1 = new Booking("Sai Gon","Ha Noi","12:00","22:00",1000,null,car1,null);
+    Booking booking2 = new Booking("New York","China","1:00","24:00",2222,null,car2,null);
+    Booking booking3 = new Booking("Wakanda","Lost Kingdom","1:00","2:00",69.69,null,car3,null);
+    Booking bookingNew = new Booking("Su Van Hanh","Lost Kingdom","1:00","2:00",69.69,null,null,null);
 
     LocalDate localDate1 = LocalDate.now();
     LocalDate localDate2 = LocalDate.now();
@@ -104,7 +104,7 @@ public class TestBookingController {
             }
         }
         when(carService.findCarByStatusTrue()).thenReturn(carsAvailable);
-        mockMvc.perform(MockMvcRequestBuilders.get("/addbooking/{bookingID}/available",1).accept(MediaType.APPLICATION_JSON))
+        mockMvc.perform(MockMvcRequestBuilders.get("/addbooking/available",1).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(200))
                 .andExpect(content().json("[{},{}]"));
     }
@@ -142,7 +142,7 @@ public class TestBookingController {
     @Test
     public void testUpdateBooking() throws Exception{
         Customer customer = new Customer();
-        Booking newBooking = new Booking("Sai Gon","Ha Noi","12:00","22:00",1000,customer,car1);
+        Booking newBooking = new Booking("Sai Gon","Ha Noi","12:00","22:00",1000,customer,car1,null);
         customer.setName("Anh Duc");
         newBooking.setStatLocation("Hai Phong");
         customer.setCustomer_id(1L);
@@ -150,7 +150,7 @@ public class TestBookingController {
         String jsonData = objectMapper.writeValueAsString(newBooking);
 //        when(bookingService.updateBooking(newBooking)).thenReturn(newBooking);
         BDDMockito.given(bookingService.updateBooking(newBooking)).willReturn(newBooking);
-        mockMvc.perform(MockMvcRequestBuilders.put("/addbooking/{booker}/available/{userID}",1,1)
+        mockMvc.perform(MockMvcRequestBuilders.put("/addbooking/available/true",1,1)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonData)
                 .accept(MediaType.APPLICATION_JSON))

@@ -32,28 +32,21 @@ public class Invoice  implements Serializable {
 
     @ManyToOne
     @Cascade(org.hibernate.annotations.CascadeType.MERGE)
-    @JoinColumn(name ="customer_id", nullable = false)
+    @JoinColumn(name ="customer_id", nullable = true)
     private Customer customer;
 
 
 
 
     @ManyToOne
-    @JoinColumn(name ="driver_id", nullable = false)
+    @JoinColumn(name ="driver_id", nullable = true)
     private Driver driver;
 
-//    @JsonIgnore
-//    @OneToOne
-//    @JoinColumn(name = "invoice_id", referencedColumnName = "invoice_id")
-//    private Booking booking;
-
-//    @OneToOne(mappedBy = "invoice")
-//    @JoinColumn(name = "booking_id", nullable = false)
-//    private Booking booking;
     @JsonIgnore
     @OneToOne
-    @JoinColumn(name="booking_id", nullable = true)
+    @JoinColumn(name = "invoice_id", referencedColumnName = "invoice_id")
     private Booking booking;
+
 
 
     public Invoice( double total_charge, Customer customer, Driver driver) {

@@ -57,7 +57,8 @@ public class Assignment2Application {
 		Invoice invoice1 = new Invoice(9,customer1, driver1);
 		Invoice invoice2 = new Invoice(10, customer2, driver2);
 		Invoice invoice3 = new Invoice(11,customer3, driver3);
-		List<Invoice> invoices = Arrays.asList(invoice1, invoice2, invoice3);
+		Invoice invoice4 = new Invoice(0,null, null);
+		List<Invoice> invoices = Arrays.asList(invoice1, invoice2, invoice3,invoice4);
 		invoiceRepository.saveAll(invoices);
 
 
