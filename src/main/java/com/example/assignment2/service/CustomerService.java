@@ -33,10 +33,6 @@ public class CustomerService {
 
         return customerRepository.save(customerExist);
     }
-    public void deleteCustomer(Long id) {
-        customerRepository.deleteById(id);
-    }
-
     public List<Customer> searchCustomer(String search){return customerRepository.searchCustomer(search);}
 
     public List<Customer> findAll(){return customerRepository.findAll();}
