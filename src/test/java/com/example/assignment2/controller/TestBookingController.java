@@ -97,7 +97,7 @@ public class TestBookingController {
         List<Car> carsNotAvailable = new ArrayList<>();
         for (Car car: carList
              ) {
-            if (car.isStatus()){
+            if (!car.isStatus()){
                 carsAvailable.add(car);
             }else {
                 carsNotAvailable.add(car);
@@ -106,7 +106,7 @@ public class TestBookingController {
         when(carService.findCarByStatusTrue()).thenReturn(carsAvailable);
         mockMvc.perform(MockMvcRequestBuilders.get("/addbooking/{bookingID}/available",1).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(200))
-                .andExpect(content().json("[{}]"));
+                .andExpect(content().json("[{},{}]"));
     }
     @Test
     public void testFilterBookingByDate() throws Exception{

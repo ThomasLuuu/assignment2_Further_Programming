@@ -34,9 +34,9 @@ public class TestBookingService {
     Booking booking1 = new Booking("Sai Gon","","","",100,null,null);
     Booking booking2 = new Booking("New York","","","",100,null,null);
     Booking booking3 = new Booking("Wakanda","","","",100,null,null);
-    LocalDate localDate1 = LocalDate.now();
-    LocalDate localDate2 = LocalDate.now();
-    LocalDate localDate3 = LocalDate.now();
+    LocalDate localDate1 = LocalDate.of(2022,5,17);
+    LocalDate localDate2 = LocalDate.of(2022,5,17);
+    LocalDate localDate3 = LocalDate.of(2022,5,17);
     List<Booking> bookingFilteredList = new ArrayList<>(Arrays.asList(booking1,booking2)); // from 1-1-2022 to 1-1-2023
 
 
@@ -65,13 +65,12 @@ public class TestBookingService {
         Mockito.when(repository.findByDateBetween(start,end)).thenReturn(bookingFilteredList);
         List<Booking> filtered = bookingService.filterBooking(start,end);
 
-        LocalDate expectedDate1 = LocalDate.of(2022,5,16);
-        LocalDate expectedDate2 = LocalDate.of(2022,6,16);
-        LocalDate expectedDate3 = LocalDate.of(2023,5,16);
+        LocalDate expectedDate1 = LocalDate.of(2022,5,17);
+        LocalDate expectedDate2 = LocalDate.of(2022,6,17);
+        LocalDate expectedDate3 = LocalDate.of(2023,5,17);
         assertEquals(expectedDate1,filtered.get(0).getDate());
         assertEquals(expectedDate2,filtered.get(1).getDate());
         assertEquals(expectedDate3,booking3.getDate());
-
     }
 
 }
