@@ -55,6 +55,7 @@ public class InvoiceController {
         return invoiceService.filterInvoice(start, end);
     }
 
+    //METHOD READ INVOICE WITH CUSTOMER ID AND START/END DATE
     @GetMapping("invoice/customer/{id}/{dayStart},{monthStart},{yearStart}/{dayEnd},{monthEnd},{yearEnd}")
     public List<Invoice> filterInvoiceByCustomer(@PathVariable("dayStart") int dayStart,
                                               @PathVariable("monthStart") int monthStart,
@@ -67,6 +68,8 @@ public class InvoiceController {
         LocalDate end = LocalDate.of(yearEnd,monthEnd,dayEnd);
         return invoiceService.customerIn(id,start,end);
     }
+
+    //METHOD READ INVOICE WITH DRIVER ID AND START/END DATE
     @GetMapping("invoice/driver/{id}/{dayStart},{monthStart},{yearStart}/{dayEnd},{monthEnd},{yearEnd}")
     public List<Invoice> filterInvoiceByDriver(@PathVariable("dayStart") int dayStart,
                                                  @PathVariable("monthStart") int monthStart,
@@ -80,6 +83,7 @@ public class InvoiceController {
         return invoiceService.driverIn(id,start,end);
     }
 
+    //METHOD PRINT REVENUE WITH DRIVER ID AND START/END DATE
     @GetMapping("invoice/revenue/driver/{id}/{dayStart},{monthStart},{yearStart}/{dayEnd},{monthEnd},{yearEnd}")
     public String filterRevenueByDriver(@PathVariable("dayStart") int dayStart,
                                                @PathVariable("monthStart") int monthStart,
@@ -92,6 +96,8 @@ public class InvoiceController {
         LocalDate end = LocalDate.of(yearEnd,monthEnd,dayEnd);
         return invoiceService.revenueDriver(id,start,end);
     }
+
+    //METHOD PRINT REVENUE WITH CUSTOMER ID AND START/END DATE
     @GetMapping("invoice/revenue/customer/{id}/{dayStart},{monthStart},{yearStart}/{dayEnd},{monthEnd},{yearEnd}")
     public String filterRevenueByCustomer(@PathVariable("dayStart") int dayStart,
                                                  @PathVariable("monthStart") int monthStart,

@@ -126,11 +126,5 @@ public class Booking {
         this.car = car;
     }
 
-//    public Invoice getInvoice() {
-//        return invoice;
-//    }
-//
-//    public void setInvoice(Invoice invoice) {
-//        this.invoice = invoice;
-//    }
+
 }

@@ -38,5 +38,7 @@ public class CustomerService {
     }
 
     public List<Customer> searchCustomer(String search){return customerRepository.searchCustomer(search);}
+
+    public List<Customer> findAll(){return customerRepository.findAll();}
 }
 

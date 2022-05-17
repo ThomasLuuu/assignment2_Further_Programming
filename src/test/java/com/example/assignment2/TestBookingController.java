@@ -3,6 +3,7 @@ package com.example.assignment2;
 import com.example.assignment2.controller.BookingController;
 import com.example.assignment2.entity.Booking;
 import com.example.assignment2.service.BookingService;
+import com.example.assignment2.service.CarService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +17,17 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static net.bytebuddy.matcher.ElementMatchers.is;
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -35,18 +40,26 @@ public class TestBookingController {
     @MockBean
     private BookingService bookingService;
 
+    @MockBean
+    private BookingController bookingController;
+
+    @MockBean
+    private CarService carService;
+
 
     @Test
     public void testFindAllBooking() throws Exception{
         PageRequest pageable = PageRequest.of(0, 3);
-        Booking booking1 = new Booking("Sai Gon","","","",1000,null,null,null);
-        Booking booking2 = new Booking("New York","","","",2222,null,null,null);
-        Booking booking3 = new Booking("Wakanda","","","",69.69,null,null,null);
+        Booking booking1 = new Booking("Sai Gon","","","",1000,null,null);
+        Booking booking2 = new Booking("New York","","","",2222,null,null);
+        Booking booking3 = new Booking("Wakanda","","","",69.69,null,null);
         List<Booking> bookingList = new ArrayList<>(Arrays.asList(booking1,booking2,booking3));
         Page<Booking> pageRes = new PageImpl<>(bookingList);
         when (bookingService.findAllBooking(pageable)).thenReturn(pageRes);
-        mockMvc.perform(MockMvcRequestBuilders.get("/booking/page/3,0").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(MockMvcRequestBuilders.get("/booking/page/1,0").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(200));
+
+
     }
 
 }

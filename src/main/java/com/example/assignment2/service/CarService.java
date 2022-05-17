@@ -75,7 +75,6 @@ public class CarService {
     public String getDay(){
         int numDate = 1;
         String result ="";
-        String space = "\n";
         SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
         Date date = new Date(System.currentTimeMillis());
         Map<String, Integer> carDate = new HashMap<String, Integer>();

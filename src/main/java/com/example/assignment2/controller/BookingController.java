@@ -7,11 +7,8 @@ import com.example.assignment2.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
-
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Date;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @RestController
@@ -29,24 +26,26 @@ public class BookingController {
         return author;
     }
 
-
+    //  METHOD CREATE BOOKING
     @PostMapping("/addbooking")
     public Booking addBooking(@RequestBody Booking booking) {
         return bookingService.saveBooking(booking);
     }
 
+    // METHOD READ CAR AVAILABLE WHEN BOOKING
     @GetMapping("/addbooking/{bookingID}/available")
     public List<Car> findCarByStatusTrue() throws IOException {
         return carService.findCarByStatusTrue();
     }
 
-    //localhost:8080/Booking/page/3,0
-    @GetMapping("/booking/page/{pageSize},{pageNo}")
+    //METHOD READ BOOKING WITH PAGE SIZE & NO
+    @RequestMapping(value ="/booking/page/{pageSize},{pageNo}", method = RequestMethod.GET)
     public List<Booking> findAllBooking(@PathVariable int pageSize, @PathVariable int pageNo) {
         PageRequest pageable = PageRequest.of(pageNo, pageSize);
         return this.bookingService.findAllBooking(pageable).getContent();
     }
 
+    //METHOD UPDATE BOOKING WITH DRIVER INFORMATION
     @PutMapping("/addbooking/{booker}/available/{userID}")
     public Booking updateBooking(@RequestBody Booking booking,
                                  @PathVariable("userID") String userID,
@@ -59,11 +58,13 @@ public class BookingController {
         }
     }
 
+    //METHOD READ BOOKING WITH BOOKING'S ID
     @GetMapping("booking/{id}")
     public Booking findBookingById(@PathVariable("id") Long id) {
         return bookingService.findBookingById(id);
     }
 
+    //METHOD READ BOOKING WITH START AND END DATE
     @GetMapping("booking/filter/{dayStart},{monthStart},{yearStart}/{dayEnd},{monthEnd},{yearEnd}")
     public List<Booking> filterBookingByDate(@PathVariable("dayStart") int dayStart,
                                              @PathVariable("monthStart") int monthStart,
