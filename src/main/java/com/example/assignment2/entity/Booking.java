@@ -3,6 +3,7 @@ import com.fasterxml.jackson.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -33,25 +34,31 @@ public class Booking {
     private String dropOffDateTime;
     private double distance;
 
-//    @ManyToOne(cascade = CascadeType.MERGE)
-//    @JoinColumn(name ="customer_id", referencedColumnName = "customer_id")
-//    private Customer customer;
+
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = false)
+    @JoinColumn(name = "customer_id", nullable = true)
     private Customer customer;
 
-    @JsonIgnore
+
     @ManyToOne
-    @JoinColumn(name ="car_id", nullable = false)
+    @JoinColumn(name ="car_id", nullable = true)
     private Car car;
 
-    @JsonIgnore
-    @OneToOne
-    @JoinColumn(name = "invoice_id", referencedColumnName = "invoice_id")
+
+//    @OneToOne
+//    @JoinColumn(name = "invoice_id", referencedColumnName = "invoice_id", nullable = true)
+//    private Invoice invoice;
+
+//    @JsonIgnore
+//    @OneToOne
+//    @JoinColumn(name="invoice_id", nullable = true)
+//    private Invoice invoice;
+    @OneToOne(mappedBy = "booking")
+    @JoinColumn(name = "invoice_id", nullable = false)
     private Invoice invoice;
 
-    public Booking( String statLocation, String endLocation, String pickUpDateTime, String dropOffDateTime, double distance, Customer customer, Car car) {
+    public Booking( String statLocation, String endLocation, String pickUpDateTime, String dropOffDateTime, double distance, Customer customer, Car car, Invoice invoice) {
         this.statLocation = statLocation;
         this.endLocation = endLocation;
         this.pickUpDateTime = pickUpDateTime;
@@ -59,6 +66,7 @@ public class Booking {
         this.distance = distance;
         this.customer = customer;
         this.car = car;
+        this.invoice = invoice;
 
     }
 
@@ -126,5 +134,11 @@ public class Booking {
         this.car = car;
     }
 
+    public Invoice getInvoice() {
+        return invoice;
+    }
 
+    public void setInvoice(Invoice invoice) {
+        this.invoice = invoice;
+    }
 }

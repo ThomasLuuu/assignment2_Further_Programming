@@ -42,6 +42,7 @@ public class BookingService {
         existBooking.setPickUpDateTime(booking.getPickUpDateTime());
         existBooking.setEndLocation(booking.getEndLocation());
         existBooking.setStatLocation(booking.getStatLocation());
+        existBooking.setInvoice(booking.getInvoice());
         return bookingRepository.save(existBooking);
     }
 

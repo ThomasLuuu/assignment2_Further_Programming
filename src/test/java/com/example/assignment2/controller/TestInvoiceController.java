@@ -49,13 +49,16 @@ public class TestInvoiceController {
     Car car2 = new Car("Vios", "c200","black","not convertible", "3", "99A-99999",4,true,driver2);
     Car car3 = new Car("G63", "A8","white","not convertible", "5", "49A-5353",5,false,driver3);
 
-    Booking booking1 = new Booking("Sai Gon","Ha Noi","12:00","22:00",1000,customer1,car1);
-    Booking booking2 = new Booking("New York","China","1:00","24:00",2222,customer2,car2);
-    Booking booking3 = new Booking("Wakanda","Lost Kingdom","1:00","2:00",69.69,customer3,car3);
 
-    Invoice invoice1 = new Invoice(9,customer1, driver1, booking1);
-    Invoice invoice2 = new Invoice(10, customer2, driver2,booking2);
-    Invoice invoice3 = new Invoice(11,customer3, driver3, booking3);
+    Invoice invoice1 = new Invoice(9,customer1, driver1);
+    Invoice invoice2 = new Invoice(10, customer2, driver2);
+    Invoice invoice3 = new Invoice(11,customer3, driver3);
+
+    Booking booking1 = new Booking("Sai Gon","Ha Noi","12:00","22:00",1000,customer1,car1,invoice1);
+    Booking booking2 = new Booking("New York","China","1:00","24:00",2222,customer2,car2,invoice2);
+    Booking booking3 = new Booking("Wakanda","Lost Kingdom","1:00","2:00",69.69,customer3,car3,invoice3);
+
+
 
     List<Invoice> invoiceList = new ArrayList<>(Arrays.asList(invoice1,invoice2,invoice3));
 

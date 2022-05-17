@@ -42,13 +42,22 @@ public class Invoice  implements Serializable {
     @JoinColumn(name ="driver_id", nullable = false)
     private Driver driver;
 
+//    @JsonIgnore
+//    @OneToOne
+//    @JoinColumn(name = "invoice_id", referencedColumnName = "invoice_id")
+//    private Booking booking;
+
+//    @OneToOne(mappedBy = "invoice")
+//    @JoinColumn(name = "booking_id", nullable = false)
+//    private Booking booking;
     @JsonIgnore
     @OneToOne
-    @JoinColumn(name = "invoice_id", referencedColumnName = "invoice_id")
+    @JoinColumn(name="booking_id", nullable = true)
     private Booking booking;
 
-    public Invoice( double total_charge, Customer customer, Driver driver,Booking booking) {
-        this.total_charge = booking.getDistance() * 3;
+
+    public Invoice( double total_charge, Customer customer, Driver driver) {
+        this.total_charge = 3 * 3;
         this.customer = customer;
         this.driver = driver;
     }
@@ -85,11 +94,11 @@ public class Invoice  implements Serializable {
         this.driver = driver;
     }
 
-    public Booking getBooking() {
-        return booking;
-    }
-
-    public void setBooking(Booking booking) {
-        this.booking = booking;
-    }
+//    public Booking getBooking() {
+//        return booking;
+//    }
+//
+//    public void setBooking(Booking booking) {
+//        this.booking = booking;
+//    }
 }

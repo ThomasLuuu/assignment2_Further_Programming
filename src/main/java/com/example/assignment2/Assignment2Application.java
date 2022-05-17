@@ -52,20 +52,21 @@ public class Assignment2Application {
 
 
 
-		//<editor-fold desc="Booking">
-		Booking booking1 = new Booking("Sai Gon","Ha Noi","12:00","22:00",1000,customer1,car1);
-		Booking booking2 = new Booking("New York","China","1:00","24:00",2222,customer2,car2);
-		Booking booking3 = new Booking("Wakanda","Lost Kingdom","1:00","2:00",69.69,customer3,car3);
-		List<Booking> bookings = Arrays.asList(booking1,booking2,booking3);
-		bookingRepository.saveAll(bookings);
 
 		//<editor-fold desc="Invoice">
-		Invoice invoice1 = new Invoice(9,customer1, driver1, booking1);
-		Invoice invoice2 = new Invoice(10, customer2, driver2,booking2);
-		Invoice invoice3 = new Invoice(11,customer3, driver3, booking3);
+		Invoice invoice1 = new Invoice(9,customer1, driver1);
+		Invoice invoice2 = new Invoice(10, customer2, driver2);
+		Invoice invoice3 = new Invoice(11,customer3, driver3);
 		List<Invoice> invoices = Arrays.asList(invoice1, invoice2, invoice3);
 		invoiceRepository.saveAll(invoices);
 
+
+		//<editor-fold desc="Booking">
+		Booking booking1 = new Booking("Sai Gon","Ha Noi","12:00","22:00",1000,customer1,car1,invoice1);
+		Booking booking2 = new Booking("New York","China","1:00","24:00",2222,customer2,car2,invoice2);
+		Booking booking3 = new Booking("Wakanda","Lost Kingdom","1:00","2:00",69.69,customer3,car3,invoice2);
+		List<Booking> bookings = Arrays.asList(booking1,booking2,booking3);
+		bookingRepository.saveAll(bookings);
 	}
 
 
