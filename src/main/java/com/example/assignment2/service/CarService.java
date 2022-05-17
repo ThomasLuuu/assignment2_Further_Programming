@@ -86,6 +86,5 @@ public class CarService {
             result =result + key +" " + carDate.get(key) + "\n" ;
         }
         return date + "\n" +"Car    |    Days" + "\n" + result;
-
     }
 }

@@ -88,12 +88,16 @@ public class TestCarController {
     @Test
     public void testGetDay() throws Exception{
         //Test request
-        // Functionality will be inside service package (TestCarService.java)
         mvc.perform(MockMvcRequestBuilders.get("/usedcar")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(200));
     }
 
-
+    @Test
+    public void testDeleteCar() throws Exception{
+        mvc.perform((MockMvcRequestBuilders.delete("/deletecar/{id}",1))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().is(200));
+    }
 
 }
