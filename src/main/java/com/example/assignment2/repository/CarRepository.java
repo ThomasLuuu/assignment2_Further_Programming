@@ -27,8 +27,6 @@ public interface CarRepository extends JpaRepository<Car, Long> {
             nativeQuery = true)
     Page<Car> findAllCar(Pageable pageable);
 
-    @Modifying
-    @Query(value = "UPDATE Car c set c.driver = :driver where c.car_id = :id")
-    Car updateCarDriver(@Param(value = "id") Long id,@Param(value = "driver") Car car);
+
 
 }
