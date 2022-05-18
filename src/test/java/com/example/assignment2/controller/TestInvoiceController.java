@@ -4,6 +4,7 @@ import com.example.assignment2.entity.*;
 import com.example.assignment2.service.CarService;
 import com.example.assignment2.service.InvoiceService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,26 +46,63 @@ public class TestInvoiceController {
     Driver driver2 = new Driver("Thanos","777PPP","0123123123");
     Driver driver3 = new Driver("Vision","999SSS","0456456456");
 
-    Car car1 = new Car("Lexus", "c1","pink","not convertible", "3.9", "61A-33333",3,false,driver1);
-    Car car2 = new Car("Vios", "c200","black","not convertible", "3", "99A-99999",4,true,driver2);
-    Car car3 = new Car("G63", "A8","white","not convertible", "5", "49A-5353",5,false,driver3);
-
-
     Invoice invoice1 = new Invoice(9,customer1, driver1);
     Invoice invoice2 = new Invoice(10, customer2, driver2);
     Invoice invoice3 = new Invoice(11,customer3, driver3);
 
-    Booking booking1 = new Booking("Sai Gon","Ha Noi","12:00","22:00",1000,customer1,car1,invoice1);
-    Booking booking2 = new Booking("New York","China","1:00","24:00",2222,customer2,car2,invoice2);
-    Booking booking3 = new Booking("Wakanda","Lost Kingdom","1:00","2:00",69.69,customer3,car3,invoice3);
-
-
 
     List<Invoice> invoiceList = new ArrayList<>(Arrays.asList(invoice1,invoice2,invoice3));
+    List<Invoice> filteredInvoice = new ArrayList<>();
+    List<Invoice> filteredInvoiceByDriverId = new ArrayList<>();
+    List<Invoice> filteredInvoiceByCustomerId = new ArrayList<>();
 
-    LocalDate localDate1 = LocalDate.now();
-    LocalDate localDate2 = LocalDate.now();
-    LocalDate localDate3 = LocalDate.now();
+    LocalDate localDate1 = LocalDate.of(2022,5,17);
+    LocalDate localDate2 = LocalDate.of(2022,5,17);
+    LocalDate localDate3 = LocalDate.of(2022,5,17);
+    LocalDate start = LocalDate.of(2022,1,1);
+    LocalDate end = LocalDate.of(2023,1,1);
+
+    @Before
+    public void setUp(){
+        invoice1.setDate(localDate1);
+        invoice2.setDate(localDate2);
+        invoice3.setDate(localDate3.plusYears(1L));
+        invoice1.getCustomer().setCustomer_id(1L);
+        invoice2.getCustomer().setCustomer_id(1L);
+        invoice3.getCustomer().setCustomer_id(1L);
+        invoice1.getDriver().setDriver_id(1L);
+        invoice2.getDriver().setDriver_id(1L);
+        invoice3.getDriver().setDriver_id(1L);
+        //Filter invoice
+        for (Invoice invoice:invoiceList
+        ) {
+            if (invoice.getDriver().getDriver_id() == 1L && invoice.getDate().isBefore(end) && invoice.getDate().isAfter(start)){
+                filteredInvoice.add(invoice);
+            }
+        }
+        //Filter invoice by driver ID
+        for (Invoice invoice:invoiceList
+        ) {
+            if (invoice.getDriver().getDriver_id() == 1L && invoice.getDate().isBefore(end) && invoice.getDate().isAfter(start)){
+                filteredInvoiceByDriverId.add(invoice);
+            }
+        }
+        //Filter invoice by customer ID
+        for (Invoice invoice:invoiceList
+        ) {
+            if (invoice.getCustomer().getCustomer_id() == 1L && invoice.getDate().isBefore(end) && invoice.getDate().isAfter(start)){
+                filteredInvoiceByCustomerId.add(invoice);
+            }
+        }
+    }
+    @Test
+    public void testFilterInvoice() throws Exception {
+        when(service.filterInvoice(start,end)).thenReturn(filteredInvoice);
+        mvc.perform(MockMvcRequestBuilders.get("/invoice/filter/{dayStart},{monthStart},{yearStart}/{dayEnd},{monthEnd},{yearEnd}",1,1,2022,1,1,2023)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().is(200))
+                .andExpect(content().json("[{},{}]"));
+    }
 
     @Test
     public void testFindInvoiceById() throws Exception{
@@ -75,6 +113,7 @@ public class TestInvoiceController {
                 .andExpect(status().is(200))
                 .andExpect(content().json("{}"));
     }
+
     @Test
     public void testFindAllInvoice() throws Exception {
         PageRequest pageable = PageRequest.of(0, 3);
@@ -85,6 +124,52 @@ public class TestInvoiceController {
                 .andExpect(content().json("[{},{},{}]"));
     }
 
+    @Test
+    public void testFilterInvoiceByCustomer() throws Exception {
+        when(service.customerIn(1L,start,end)).thenReturn(filteredInvoiceByCustomerId);
+        mvc.perform(MockMvcRequestBuilders.get("/invoice/customer/{id}/{dayStart},{monthStart},{yearStart}/{dayEnd},{monthEnd},{yearEnd}",1,1,1,2022,1,1,2023)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().is(200))
+                .andExpect(content().json("[{},{}]"));
+    }
 
+    @Test
+    public void testFilterInvoiceByDriver() throws Exception {
+        when(service.customerIn(1L,start,end)).thenReturn(filteredInvoiceByDriverId);
+        mvc.perform(MockMvcRequestBuilders.get("/invoice/customer/{id}/{dayStart},{monthStart},{yearStart}/{dayEnd},{monthEnd},{yearEnd}",1,1,1,2022,1,1,2023)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().is(200))
+                .andExpect(content().json("[{},{}]"));
+    }
 
+    @Test
+    public void testRevenueByDriver() throws Exception{
+        int revenue = 0;
+        for (Invoice invoice: filteredInvoiceByDriverId
+             ) {
+            revenue += invoice.getTotal_charge();
+        }
+        String revenueString = Integer.toString(revenue);
+
+        when(service.revenueDriver(1L,start,end)).thenReturn("Total revenue is " + revenueString);
+        mvc.perform(MockMvcRequestBuilders.get("/invoice/revenue/driver/{id}/{dayStart},{monthStart},{yearStart}/{dayEnd},{monthEnd},{yearEnd}",1,1,1,2022,1,1,2023)
+                .accept(MediaType.ALL))
+                .andExpect(status().is(200))
+                .andExpect(content().string("Total revenue is " + revenueString));
+    }
+
+    @Test
+    public void testRevenueByCustomer() throws Exception{
+        int revenue = 0;
+        for (Invoice invoice: filteredInvoiceByCustomerId
+        ) {
+            revenue += invoice.getTotal_charge();
+        }
+        String revenueString = Integer.toString(revenue);
+        when(service.revenueCustomer(1L,start,end)).thenReturn("Total revenue is " + revenueString);
+        mvc.perform(MockMvcRequestBuilders.get("/invoice/revenue/customer/{id}/{dayStart},{monthStart},{yearStart}/{dayEnd},{monthEnd},{yearEnd}",1,1,1,2022,1,1,2023)
+                        .accept(MediaType.ALL))
+                .andExpect(status().is(200))
+                .andExpect(content().string("Total revenue is " + revenueString));
+    }
 }

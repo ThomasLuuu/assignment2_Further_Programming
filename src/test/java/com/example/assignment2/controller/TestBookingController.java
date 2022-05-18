@@ -5,12 +5,14 @@ import com.example.assignment2.controller.CustomerController;
 import com.example.assignment2.entity.Booking;
 import com.example.assignment2.entity.Car;
 import com.example.assignment2.entity.Customer;
+import com.example.assignment2.entity.Invoice;
 import com.example.assignment2.repository.BookingRepository;
 import com.example.assignment2.service.BookingService;
 import com.example.assignment2.service.CarService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.minidev.json.JSONObject;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.BDDMockito;
@@ -58,6 +60,7 @@ public class TestBookingController {
 
     @Mock
     private BookingRepository repository;
+
     Car car1 = new Car("Lexus", "c1","pink","not convertible", "3.9", "61A-33333",3,false,null);
     Car car2 = new Car("Vios", "c200","black","not convertible", "3", "99A-99999",4,true,null);
     Car car3 = new Car("G63", "A8","white","not convertible", "5", "49A-5353",5,false,null);
@@ -67,9 +70,37 @@ public class TestBookingController {
     Booking booking3 = new Booking("Wakanda","Lost Kingdom","1:00","2:00",69.69,null,car3,null);
     Booking bookingNew = new Booking("Su Van Hanh","Lost Kingdom","1:00","2:00",69.69,null,null,null);
 
-    LocalDate localDate1 = LocalDate.now();
-    LocalDate localDate2 = LocalDate.now();
-    LocalDate localDate3 = LocalDate.now();
+    LocalDate localDate1 = LocalDate.of(2022,5,17);
+    LocalDate localDate2 = LocalDate.of(2022,5,17);
+    LocalDate localDate3 = LocalDate.of(2022,5,17);
+    LocalDate start = LocalDate.of(2022,1,1);
+    LocalDate end = LocalDate.of(2023,1,1);
+
+    List<Booking> bookingList = new ArrayList<>(Arrays.asList(booking1,booking2,booking3));
+    List<Booking> filteredBooking = new ArrayList<>();
+    List<Car> carList = new ArrayList<>(Arrays.asList(car1,car2,car3));
+    List<Car> carsAvailable = new ArrayList<>();
+
+    @Before
+    public void setUp(){
+        booking1.setDate(localDate1);
+        booking2.setDate(localDate2);
+        booking3.setDate(localDate3.plusYears(1L));
+        for (Booking booking: bookingList
+             ) {
+            if (booking.getDate().isBefore(end)){
+                filteredBooking.add(booking);
+            }
+        }
+        for (Car car: carList
+        ) {
+            if (!car.isStatus()){
+                carsAvailable.add(car);
+            }
+        }
+    }
+
+
     // Test GET
     @Test
     public void testFindAllBooking() throws Exception{
@@ -90,36 +121,18 @@ public class TestBookingController {
                 .andExpect(content().json("{}"));
 
     }
+
     @Test
     public void testFindCarByStatus() throws Exception{
-        List<Car> carList = new ArrayList<>(Arrays.asList(car1,car2,car3));
-        List<Car> carsAvailable = new ArrayList<>();
-        List<Car> carsNotAvailable = new ArrayList<>();
-        for (Car car: carList
-             ) {
-            if (!car.isStatus()){
-                carsAvailable.add(car);
-            }else {
-                carsNotAvailable.add(car);
-            }
-        }
         when(carService.findCarByStatusTrue()).thenReturn(carsAvailable);
         mockMvc.perform(MockMvcRequestBuilders.get("/addbooking/available",1).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(200))
                 .andExpect(content().json("[{},{}]"));
     }
+
     @Test
     public void testFilterBookingByDate() throws Exception{
-        booking1.setDate(localDate1);
-        booking2.setDate(localDate2.plusMonths(1L));
-        booking3.setDate(localDate3.plusYears(1L)); // 16-5-2023
-        List<Booking> bookingList = new ArrayList<>(Arrays.asList(booking1,booking2)); // from 1-1-2022 to 1-1-2023
-        int startDay = 1;int endDay =1 ;int startMonth = 1;int endMonth = 1;
-        int startYear = 2022;
-        int endYear = 2023;
-        LocalDate start = LocalDate.of(startYear,startMonth,startDay);
-        LocalDate end = LocalDate.of(endYear,endMonth,endDay);
-        when(bookingService.filterBooking(start,end)).thenReturn(bookingList);
+        when(bookingService.filterBooking(start,end)).thenReturn(filteredBooking);
         mockMvc.perform(MockMvcRequestBuilders.get("/booking/filter/{dayStart},{monthStart},{yearStart}/{dayEnd},{monthEnd},{yearEnd}",1,1,2022,1,1,2023)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(200))

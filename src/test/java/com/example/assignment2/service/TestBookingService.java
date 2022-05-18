@@ -1,6 +1,7 @@
 package com.example.assignment2.service;
 import com.example.assignment2.entity.Booking;
 import com.example.assignment2.repository.BookingRepository;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -31,13 +32,30 @@ public class TestBookingService {
     @Mock
     private BookingRepository repository;
 
-    Booking booking1 = new Booking("Sai Gon","","","",100,null,null);
-    Booking booking2 = new Booking("New York","","","",100,null,null);
-    Booking booking3 = new Booking("Wakanda","","","",100,null,null);
+    Booking booking1 = new Booking("Sai Gon","","","",100,null,null,null);
+    Booking booking2 = new Booking("New York","","","",100,null,null,null);
+    Booking booking3 = new Booking("Wakanda","","","",100,null,null,null);
     LocalDate localDate1 = LocalDate.of(2022,5,17);
     LocalDate localDate2 = LocalDate.of(2022,5,17);
     LocalDate localDate3 = LocalDate.of(2022,5,17);
-    List<Booking> bookingFilteredList = new ArrayList<>(Arrays.asList(booking1,booking2)); // from 1-1-2022 to 1-1-2023
+    LocalDate start = LocalDate.of(2022,1,1);
+    LocalDate end = LocalDate.of(2023,1,1);
+
+    List<Booking> bookingList = new ArrayList<>(Arrays.asList(booking1,booking2,booking3));
+    List<Booking> filteredBooking = new ArrayList<>();
+
+    @Before
+    public void setUp(){
+        booking1.setDate(localDate1);
+        booking2.setDate(localDate2);
+        booking3.setDate(localDate3.plusYears(1L));
+        for (Booking booking: bookingList
+        ) {
+            if (booking.getDate().isBefore(end)){
+                filteredBooking.add(booking);
+            }
+        }
+    }
 
 
 
@@ -54,23 +72,14 @@ public class TestBookingService {
     }
     @Test
     public void findByDateBetweenTest(){
-        booking1.setDate(localDate1);
-        booking2.setDate(localDate2.plusMonths(1L));
-        booking3.setDate(localDate3.plusYears(1L)); // 16-5-2023
-        int startDay = 1;int endDay =1 ;int startMonth = 1;int endMonth = 1;
-        int startYear = 2022;
-        int endYear = 2023;
-        LocalDate start = LocalDate.of(startYear,startMonth,startDay);
-        LocalDate end = LocalDate.of(endYear,endMonth,endDay);
-        Mockito.when(repository.findByDateBetween(start,end)).thenReturn(bookingFilteredList);
+        Mockito.when(repository.findByDateBetween(start,end)).thenReturn(filteredBooking);
         List<Booking> filtered = bookingService.filterBooking(start,end);
 
         LocalDate expectedDate1 = LocalDate.of(2022,5,17);
-        LocalDate expectedDate2 = LocalDate.of(2022,6,17);
+        LocalDate expectedDate2 = LocalDate.of(2022,5,17);
         LocalDate expectedDate3 = LocalDate.of(2023,5,17);
         assertEquals(expectedDate1,filtered.get(0).getDate());
         assertEquals(expectedDate2,filtered.get(1).getDate());
         assertEquals(expectedDate3,booking3.getDate());
     }
-
 }

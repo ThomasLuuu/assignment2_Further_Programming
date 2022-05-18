@@ -21,8 +21,6 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long>{
 
     List<Invoice> findByDateBetween(LocalDate startDate, LocalDate endDate);
 
-    @Query(value = "SELECT * from Invoice i where  i.date BETWEEN :startDate AND :endDate", nativeQuery = true)
-    List<Invoice> findViaDate(LocalDate startDate, LocalDate endDate);
 
 
 }

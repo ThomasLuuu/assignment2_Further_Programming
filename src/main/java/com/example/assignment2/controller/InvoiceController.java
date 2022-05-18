@@ -21,11 +21,6 @@ public class InvoiceController {
     @Autowired
     private InvoiceService invoiceService;
 
-    @PostMapping("/addinvoice")
-    public Invoice addinvoice(@RequestBody Invoice invoice) {
-        return invoiceService.saveInvoice(invoice);
-    }
-
     @GetMapping("/invoice/page/{pageSize},{pageNo}")
     public List<Invoice> findInvoiceById(@PathVariable int pageSize, @PathVariable int pageNo) {
         PageRequest pageagle = PageRequest.of(pageNo, pageSize);
@@ -37,11 +32,6 @@ public class InvoiceController {
         return invoiceService.findInvoiceById(id);
     }
 
-
-    @PutMapping("/update/invoice")
-    public Invoice updateInvoice(@RequestBody Invoice invoice) {
-        return invoiceService.updateInvoice(invoice);
-    }
 
     @GetMapping("invoice/filter/{dayStart},{monthStart},{yearStart}/{dayEnd},{monthEnd},{yearEnd}")
     public List<Invoice> filterBookingByDate(@PathVariable("dayStart") int dayStart,
