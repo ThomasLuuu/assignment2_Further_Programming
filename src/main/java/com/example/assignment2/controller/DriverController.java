@@ -55,13 +55,7 @@ public class DriverController {
     public Driver findDriverById(@PathVariable("id") Long id) {
         return driverService.findDriverById(id);
     }
-
-    //METHOD DELETE DRIVER
-    @DeleteMapping("/driver/delete/{id}")
-    public void deleteDriver(@PathVariable("id") Long id) {
-        driverService.deleteDriver(id);
-    }
-
+    
     //METHOD UPDATE DRIVER
     @PutMapping("/update/driver")
     public Driver updateDriver(@RequestBody Driver driver) {
