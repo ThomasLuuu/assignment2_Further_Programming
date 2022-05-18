@@ -4,6 +4,7 @@ import com.example.assignment2.entity.Car;
 import com.example.assignment2.entity.Driver;
 import com.example.assignment2.repository.CarRepository;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -37,16 +38,29 @@ public class TestCarService {
     Car car2 = new Car("Vios", "c200","black","not convertible", "3", "99A-99999",4,true,driver2);
     Car car3 = new Car("G63", "A8","white","not convertible", "5", "49A-5353",5,false,driver3);
     List<Car> carList = new ArrayList<>(Arrays.asList(car1,car2,car3));
+    List<Car> availableCar = new ArrayList<>();
+    List<Car> listNullDriver = new ArrayList<>();
 
-    @Test
-    public void findCarByStatusTest(){
-        List<Car> availableCar = new ArrayList<>();
+    @Before
+    public void setUp(){
+        //Car status
         for (Car car:carList
-             ) {
+        ) {
             if (!car.isStatus()){
                 availableCar.add(car);
             }
         }
+        // Check null driver
+        for (Car car:carList
+        ) {
+            if (car.getDriver() == null){
+                listNullDriver.add(car);
+            }
+        }
+    }
+
+    @Test
+    public void findCarByStatusTest(){
         Mockito.when(repository.findCarViaStatus()).thenReturn(availableCar);
         List<Car> testedList = service.findCarByStatusTrue();
         Assert.assertEquals("Lexus",testedList.get(0).getMake());
@@ -55,13 +69,6 @@ public class TestCarService {
 
     @Test
     public void findCarNullDriverTest(){
-        List<Car> listNullDriver = new ArrayList<>();
-        for (Car car:carList
-             ) {
-            if (car.getDriver() == null){
-                listNullDriver.add(car);
-            }
-        }
         Mockito.when(repository.findCarNullDriver()).thenReturn(listNullDriver);
         List<Car>testedList = service.findCarByNullDriver();
         Assert.assertEquals(0,testedList.size());
